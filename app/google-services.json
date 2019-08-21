@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "675396243544",
+    "firebase_url": "https://hadayekelahram-cf3fc.firebaseio.com",
+    "project_id": "hadayekelahram-cf3fc",
+    "storage_bucket": "hadayekelahram-cf3fc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:675396243544:android:a9c4e6ea8553030a",
+        "android_client_info": {
+          "package_name": "com.kobtan.fahmy.hadayekelahram"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "675396243544-4mos9hr64bvb2ud6olo13qt25pamfiuc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kobtan.fahmy.hadayekelahram",
+            "certificate_hash": "d3a657aa3ac696a0e7b5dc8617c932856fbe61f2"
+          }
+        },
+        {
+          "client_id": "675396243544-7eudp6iv61ij14sbsb50irdmp6jn97gc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDndbChX8ronGyccFgGAoDb_CJ-gBF2qGQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "675396243544-7eudp6iv61ij14sbsb50irdmp6jn97gc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

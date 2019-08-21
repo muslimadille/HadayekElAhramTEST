@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorBlowWhite"
+    tools:context=".SearchActivity">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/background_border_back"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/backyy"
+                        android:layout_width="80dp"
+                        android:layout_height="25dp"
+                        android:layout_marginRight="15dp"
+                        android:src="@drawable/backyyy"/>
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:id="@+id/li_buy"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/titlee"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="اضغط للبحث التفصيلي"
+                        android:gravity="right"
+                        android:layout_marginRight="15dp"
+                        android:textStyle="bold"
+                        android:textSize="20dp"
+                        android:textColor="@android:color/white"/>
+
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+
+
+
+
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="اختر النوع الفرعي"
+            android:padding="10dp"
+            android:layout_margin="5dp"
+            android:textSize="15dp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:background="@drawable/background_border_add"/>
+
+
+        <TextView
+            android:id="@+id/two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="اختر النوع"
+            android:padding="10dp"
+            android:textSize="15dp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:layout_margin="5dp"
+            android:background="@drawable/background_border_add"/>
+
+        <TextView
+            android:id="@+id/one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="اختر البوابة"
+            android:padding="10dp"
+            android:textSize="15dp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:layout_margin="5dp"
+            android:background="@drawable/background_border_add"/>
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+    </ListView>
+
+</LinearLayout>
+
+
+

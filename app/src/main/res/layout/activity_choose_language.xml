@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context=".ChooseLanguageActivity"
+        android:orientation="vertical">
+
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_border_back"
+                android:theme="@style/AppTheme.AppBarOverlay">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:id="@+id/li_buy"
+                        android:padding="5dp"
+                        android:layout_weight="0.5"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/titlee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="حدائق الاهرام في جيبك"
+                            android:textStyle="bold"
+                            android:textSize="20dp"
+                            android:textColor="@android:color/white"/>
+
+                        <ImageView
+                            android:id="@+id/fabmembere"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:padding="5dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/background_border"
+                            android:src="@drawable/logo"/>
+
+                    </LinearLayout>
+
+
+
+
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+
+
+
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="10dp">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_border_back"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:id="@+id/one"
+                android:padding="5dp"
+                android:text="عربي"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_border_back"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:id="@+id/two"
+                android:layout_marginTop="15dp"
+                android:padding="5dp"
+                android:text="Englishِ"/>
+
+        </LinearLayout>
+    </LinearLayout>

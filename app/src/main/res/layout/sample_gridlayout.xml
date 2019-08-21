@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+
+    <RelativeLayout
+        android:id="@+id/rel"
+        android:layout_width="80dp"
+        android:background="@drawable/circle_border"
+        android:layout_height="80dp">
+
+        <ImageView
+            android:id="@+id/os_images"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:padding="5dp"
+            android:src="@mipmap/ic_launcher" />
+
+    </RelativeLayout>
+
+
+
+    <TextView
+        android:layout_below="@+id/rel"
+        android:id="@+id/os_texts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clinic Details"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:textSize="14dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="serif"
+        android:textStyle="bold"/>
+
+</LinearLayout>
+
+<!--
+<TextView
+                    android:id="@+id/item5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="serif"
+                    android:layout_marginTop="2dp"
+                    android:text="عدد المشاهدات: "
+                    android:gravity="right"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/item6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="serif"
+                    android:layout_marginTop="2dp"
+                    android:text="عدد المكالمات: "
+                    android:gravity="right"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/item7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="serif"
+                    android:layout_marginTop="2dp"
+                    android:text="عدد الرسائل: "
+                    android:gravity="right"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+-->

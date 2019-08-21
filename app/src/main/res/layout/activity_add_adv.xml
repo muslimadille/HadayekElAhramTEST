@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context=".AddAdvActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_border_back"
+                android:theme="@style/AppTheme.AppBarOverlay">
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/backyy"
+                            android:layout_width="70dp"
+                            android:layout_height="30dp"
+                            android:layout_marginRight="15dp"
+                            android:src="@drawable/backyyy"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:id="@+id/li_buy"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/titlee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="اضف اعلان"
+                            android:textStyle="bold"
+                            android:textSize="20dp"
+                            android:textColor="@android:color/white"/>
+
+
+                    </LinearLayout>
+
+
+
+
+
+
+                </LinearLayout>
+
+
+
+
+
+
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+
+
+
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
+
+        <LinearLayout
+            android:id="@+id/liner_profileimage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="@color/colorBlowWhite"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="ادخل صور الاعلان"
+                android:textStyle="bold"
+                android:padding="5dp"
+                android:textColor="@android:color/black"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/liner_profileimagee"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5dp"
+            android:background="@color/colorBlowWhite"
+            android:layout_marginBottom="15dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/imgProfile1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/addph"/>
+            <ImageView
+                android:id="@+id/imgProfile2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/addph"/>
+            <ImageView
+                android:id="@+id/imgProfile3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/addph"/>
+            <ImageView
+                android:id="@+id/imgProfile4"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/addph"/>
+            <ImageView
+                android:id="@+id/imgProfile5"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/addph"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:padding="2dp"
+            android:gravity="right"
+            android:text="اسم الاعلان"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:textSize="17dp"/>
+        <EditText
+            android:id="@+id/input_name"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="right"
+            android:hint="ادخل اسم الاعلان"
+            android:textSize="14dp"
+            android:textColor="@android:color/black"
+            />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:paddingLeft="15dp"
+            android:gravity="right"
+            android:padding="2dp"
+            android:text="رقم الموبايل"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:textSize="17dp"/>
+        <EditText
+            android:id="@+id/input_telefone"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="right"
+            android:inputType="number"
+            android:hint="ادخل رقم هاتفك"
+            android:textSize="14dp"
+            android:textColor="@android:color/black"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:paddingLeft="15dp"
+            android:gravity="right"
+            android:padding="2dp"
+            android:text="ادخل تفاصيل الاعلان"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:textSize="17dp"/>
+        <EditText
+            android:id="@+id/input_details"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="right"
+            android:inputType="text"
+            android:hint="ادخل تفاصيل الاعلان"
+            android:textSize="14dp"
+            android:textColor="@android:color/black"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:paddingLeft="15dp"
+            android:gravity="right"
+            android:padding="2dp"
+            android:text="ادخل سعر الاعلان"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:textSize="17dp"/>
+        <EditText
+            android:id="@+id/input_price"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="right"
+            android:inputType="number"
+            android:hint="ادخل سعر الاعلان"
+            android:textSize="14dp"
+            android:textColor="@android:color/black"
+            />
+
+        <Button
+            android:id="@+id/input_bwaba"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:text="اختار البوابة"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"
+            android:background="@drawable/background_border"
+            android:textSize="17dp" />
+
+        <Button
+            android:id="@+id/input_address"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:text="تصنيف الاعلان"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"
+            android:background="@drawable/background_border"
+            android:textSize="17dp" />
+
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:background="@drawable/background_border_add"
+            android:padding="10dp"
+            android:text="اضف الاعلان"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"/>
+
+
+
+    </LinearLayout>
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#4FCE5D</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#FFFFFF</color>
+    <color name="colorBlowWhite">#F7F5F5</color>
+    <color name="colorBlowWhiteTwo">#F1F1F1</color>
+
+    <color name="transbernt">#00FFFFFF</color>
+
+    <color name="colorOne">#99de33</color>
+    <color name="colorTwo">#6bb55c</color>
+    <color name="colorThree">#4b9b76</color>
+
+    <color name="one">#3F51B5</color>
+    <color name="two">#FF9800</color>
+    <color name="three">#946959</color>
+    <color name="four">#F44336</color>
+    <color name="five">#2196F3</color>
+    <color name="six">#9C27B0</color>
+    <color name="seven">#83153A</color>
+    <color name="eight">#344E0D</color>
+    <color name="nine">#4CAF50</color>
+    <color name="ten">#F0CC5D</color>
+    <color name="eleven">#009688</color>
+    <color name="twelve">#163E58</color>
+    <color name="thirteen">#7CB43B</color>
+    <color name="fourten">#813B0C</color>
+    <color name="fivten">#6D6E6F</color>
+    <color name="sixten">#5E7EA0</color>
+    <color name="seventen">#FFEB3B</color>
+    <color name="eighten">#9C27B0</color>
+    <color name="ninten">#4D8888</color>
+    <color name="twenty">#4E2A06</color>
+    <color name="twentyone">#BE2E24</color>
+    <color name="twentytwo">#F5C747</color>
+    <color name="twentythree">#3F51B5</color>
+    <color name="twentyfour">#FF9800</color>
+
+    <color name="black">#FF0E0D0D</color>
+
+
+    <color name="colorPrimaryTwo">#FCCB0f</color>
+    <color name="colorPrimaryThree">#686046</color>
+
+    <color name="hint_foreground_material_light">#53a072</color>
+    <color name="hint_foreground_material_dark">#03A9F4</color>
+
+
+
+</resources>

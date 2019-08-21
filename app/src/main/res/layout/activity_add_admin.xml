@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:paddingRight="5dp"
+    android:paddingLeft="5dp"
+    android:paddingBottom="5dp"
+    tools:context=".AddAdminActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="56dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp">
+        <LinearLayout
+            android:id="@+id/liner_profileimage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="@color/colorBlowWhite"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="ادخل صورة"
+                android:textStyle="bold"
+                android:padding="5dp"
+                android:textColor="@android:color/black"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgProfile1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:src="@drawable/addph"/>
+
+
+
+        <EditText android:id="@+id/input_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:gravity="center"
+            android:hint="ادخل الاسم" />
+
+        <EditText android:id="@+id/input_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:hint="ادخل العنوان" />
+
+
+        <EditText android:id="@+id/input_telefone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:hint="ادخل رقم الهاتف"/>
+
+        <EditText android:id="@+id/input_bwaba"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:hint="ادخل رقم البوابة"/>
+
+        <TextView
+            android:id="@+id/kind_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="اختر النوع الرئيسي"
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:textSize="15dp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:background="@drawable/background_border_add"/>
+        <TextView
+            android:id="@+id/kind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="اختر النوع الفرعي"
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:textSize="15dp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:background="@drawable/background_border_add"/>
+
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/colorPrimary"
+            android:padding="5dp"
+            android:text="تسجيل حديد"
+            android:textColor="@android:color/white"/>
+
+
+    </LinearLayout>
+</RelativeLayout>
+</ScrollView>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single" >
+        <item
+            android:id="@+id/all_service"
+            android:title="جميع الخدمات"
+            android:icon="@drawable/homee"/>
+        <item
+            android:id="@+id/notifications"
+            android:title="العروض و الخصومات"
+            android:icon="@drawable/tag"/>
+        <item
+            android:id="@+id/buy"
+            android:title="سياسة الخصوصية"
+            android:icon="@drawable/shoppinguy"/>
+        <item
+            android:id="@+id/search"
+            android:title="بحث تفصيلي"
+            android:icon="@drawable/magnifying"/>
+        <item
+            android:id="@+id/logout"
+            android:title="مقترحات و شكاوي"
+            android:icon="@drawable/feed"/>
+        <item
+            android:id="@+id/sessions"
+            android:title="مشاركة مع صديق"
+            android:icon="@drawable/share"/>
+        <item
+            android:id="@+id/adv"
+            android:title="اعلن معنا"
+            android:icon="@drawable/megaphone"/>
+        <item
+            android:id="@+id/contact"
+            android:title="اتصل بنا"
+            android:icon="@drawable/phoneco"/>
+        <item
+            android:id="@+id/change"
+            android:title="تغير اللغة"
+            android:icon="@drawable/feed"/>
+    </group>
+</menu>

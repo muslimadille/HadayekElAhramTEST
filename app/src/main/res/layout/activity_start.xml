@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backstarttwo"
+    tools:context=".StartActivity">
+
+    <ImageView
+        android:id="@+id/profileImage"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:padding="8dp"
+        android:layout_centerVertical="true"
+        android:background="@drawable/background_border"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo" />
+
+
+
+<!--
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="171dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="96dp"
+        >
+
+
+
+        <pl.droidsonroids.gif.GifImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/giff"
+            />
+
+
+         <com.victor.loading.rotate.RotateLoading
+            android:id="@+id/rotateloading"
+            android:layout_width="50dp"
+            android:layout_height="5dp"
+            android:layout_centerInParent="true"
+            app:loading_color="#ffffff"
+            app:loading_width="5dp" />
+
+
+    </RelativeLayout>
+
+-->
+
+
+</RelativeLayout>
