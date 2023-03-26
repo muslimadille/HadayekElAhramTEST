@@ -115,27 +115,32 @@ public class SearchActivity extends AppCompatActivity {
             public void onClick(View view) {
                 ArrayList<String> items = new ArrayList<String>();
                 osNameList = new ArrayList<>();
-                items.add("تسوق");
                 items.add("مطاعم");
-                items.add("كافيهات");
+                items.add("تسوق");
+                items.add("موضة و ملابس");
                 items.add("مستشفيات");
                 items.add("دكتور خاص");
                 items.add("صيدليات");
                 items.add("معامل");
                 items.add("تعليمي");
+
+                items.add("حفلات ومناسبات");   // new 1
+
                 items.add("جيم و رياضة");
-                items.add("موضة و ملابس");
                 items.add("اجهزة الكترونية") ;
-                items.add("سيارات");
-                items.add("ماكينات الصرافة");
                 items.add("عقارات");
-                items.add("خدمات حكومية");
-                items.add("صيانة منزلية") ;
                 items.add("مستلزمات اطفال") ;
-                items.add("اتصالات") ;
+                items.add("سيارات");
+                items.add("موبيلات") ;
                 items.add("حيوانات اليفة") ;
-                items.add("مكاتب محامة");
+                items.add("صيانة منزلية") ;
                 items.add("اثاث منزلي") ;
+                items.add("كافيهات");
+                items.add("ماكينات الصرافة");
+                items.add("ترفيهي");
+                items.add("شركات الاتصالات") ;
+                items.add("خدمات حكومية");
+                items.add("مكاتب محاماه");
 
 
                 final String[] list = getStringArray(items);
@@ -281,6 +286,19 @@ public class SearchActivity extends AppCompatActivity {
 
 
                 }
+                else if (newString.equals("حفلات ومناسبات")) {
+                    //
+                    osNameList = new ArrayList<>() ;
+                    //
+                    osNameList.add("بيوتي سنتر حريمي");
+                    osNameList.add("كوافير رجالي");
+                    osNameList.add("تصوير");
+                    osNameList.add("زهور");
+                    osNameList.add("دعاية و اعلان");
+                    osNameList.add("تنظيم حفلات");
+                    osNameList.add("مساج وسبا");
+                    //
+                }
                 else if (newString.equals("اجهزة الكترونية")) {
                     //
                     osNameList = new ArrayList<>() ;
@@ -302,6 +320,8 @@ public class SearchActivity extends AppCompatActivity {
                     osNameList.add("كماليات سيارات");
                     osNameList.add("زجاج سيارات");
                     osNameList.add("ايجار سيارات");
+                    osNameList.add("نقل اثاث");
+                    osNameList.add("ونش انقاذ");
 
 
                 }
@@ -312,7 +332,7 @@ public class SearchActivity extends AppCompatActivity {
                     osNameList.add("مدارس");
                     osNameList.add("حضانات");
                     osNameList.add("سنتر تعليمي");
-                    osNameList.add("انشطة اخري");
+                    osNameList.add("دروس خصوصية");
 
 
                 }
@@ -335,8 +355,8 @@ public class SearchActivity extends AppCompatActivity {
                     //
                     osNameList = new ArrayList<>() ;
                     //
-                    osNameList.add("ايجار");
-                    osNameList.add("تمليك");
+                    osNameList.add("شركات عقارية");
+                    osNameList.add("عقارات افراد");
                     osNameList.add("تشطيبات وديكور");
                     //
 
@@ -411,6 +431,16 @@ public class SearchActivity extends AppCompatActivity {
                     //
 
                 }
+                else if (newString.equals("ترفيهي")) {
+                    //
+                    osNameList = new ArrayList<>() ;
+                    //
+                    osNameList.add("Playstation");
+                    osNameList.add("ملاعب كرة");
+                    osNameList.add("العاب اطفال");
+                    //
+
+                }
 
                 String list[] = new String[osNameList.size()];
                 list = getStringArray(osNameList);
@@ -478,6 +508,9 @@ public class SearchActivity extends AppCompatActivity {
                             itemaddress.add(dataSnapshot.child("address").getValue().toString());
                             itemtel.add(dataSnapshot.child("telephone").getValue().toString());
                             itemkey.add(dataSnapshot.getKey().toString());
+
+
+
                             if (dataSnapshot.hasChild("map_long") && dataSnapshot.hasChild("map_ard") ) {
                                 maplong.add(Double.valueOf(dataSnapshot.child("map_long").getValue().toString()));
                                 map_ard.add(Double.valueOf(dataSnapshot.child("map_ard").getValue().toString()));

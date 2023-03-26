@@ -31,7 +31,6 @@ import com.esafirm.imagepicker.features.ReturnMode;
 import com.esafirm.imagepicker.model.Image;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.vision.text.Line;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -463,8 +462,15 @@ public class AddAdvActivity extends AppCompatActivity {
             filepath.child("img"+"_"+ k).putFile(getImageUri(AddAdvActivity.this,myBitmap)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Uri downloadURL = taskSnapshot.getDownloadUrl();
-                    urls.add(downloadURL.toString()) ;
+                    filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            Uri downloadUrl = uri;
+                            //Uri downloadURL = taskSnapshot.getDownloadUrl();
+                            urls.add(downloadUrl.toString()) ;
+                        }
+                    });
+
 
                 }
             });

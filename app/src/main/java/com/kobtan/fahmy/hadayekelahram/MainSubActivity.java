@@ -1,9 +1,13 @@
 package com.kobtan.fahmy.hadayekelahram;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Handler;
 
+import androidx.annotation.RequiresApi;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,19 +15,29 @@ import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.eftimoff.viewpagertransformers.RotateUpTransformer;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainSubActivity extends AppCompatActivity {
 
-
+    private TextView text_e3ln ;
     private GridView gridview;
     private ArrayList<String> osNameList = new ArrayList<>() ;
     private ArrayList<Integer> osImages = new ArrayList<>() ;
+
+
+    private ArrayList<String> imagesIds = new ArrayList<>() ;
 
     private TextView title ;
     private Typeface typeface ;
@@ -32,13 +46,15 @@ public class MainSubActivity extends AppCompatActivity {
     private static ViewPager mPager;
     private static int currentPage = 0;
     private static int NUM_PAGES = 0;
-    private ArrayList<Integer> imagesView  = new ArrayList<>();
+    private ArrayList<String> imagesView  = new ArrayList<>();
     private String newString ;
     private int newStringTwo ;
     final Handler handler = new Handler();
     public Timer swipeTimer ;
+    private DatabaseReference mDatabase ;
 
     private ArrayList<String> kind = new ArrayList<>();
+    private int test_modules ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +129,8 @@ public class MainSubActivity extends AppCompatActivity {
 
         init("all");
 
+        getData("all");
+
 
         gridview = (GridView) findViewById(R.id.customgrid);
 
@@ -120,11 +138,11 @@ public class MainSubActivity extends AppCompatActivity {
 
         getItemsAll();
 
-
+        text_e3ln = findViewById(R.id.text_e3ln) ;
+        text_e3ln.setSelected(true);
 
 
     }
-
 
 
 
@@ -245,10 +263,14 @@ public class MainSubActivity extends AppCompatActivity {
                 osNameList = new ArrayList<>() ;
                 osImages = new ArrayList<>() ;
                 //
+                osNameList.add("العاب اطفال");
                 osNameList.add("Playstation");
                 osNameList.add("ملاعب كرة");
 
+
                 //
+
+                osImages.add(R.drawable.football);
                 osImages.add(R.drawable.playstationvv);
                 osImages.add(R.drawable.football);
 
@@ -336,8 +358,8 @@ public class MainSubActivity extends AppCompatActivity {
                 osNameList = new ArrayList<>() ;
                 osImages = new ArrayList<>() ;
                 //
-                osNameList.add("بيوتي سنتر حريمي");
-                osNameList.add("كوافير رجالي");
+                //osNameList.add("بيوتي سنتر حريمي");
+                //osNameList.add("كوافير رجالي");
                 osNameList.add("ملابس حريمي");
                 osNameList.add("ملابس رجالي");
                 osNameList.add("لانجيري");
@@ -345,17 +367,18 @@ public class MainSubActivity extends AppCompatActivity {
                 osNameList.add("مجوهرات");
                 osNameList.add("نظارات و عدسات");
                 osNameList.add("ملابس رياضية");
-                osNameList.add("تصوير");
-                osNameList.add("مساج وسبا");
+                //osNameList.add("تصوير");
+                //osNameList.add("مساج وسبا");
                 osNameList.add("فراشة وحفلات");
-                osNameList.add("زهور");
+                //osNameList.add("زهور");
                 osNameList.add("مستحضرات تجميل");
                 osNameList.add("خياطه و تفصيل");
-                osNameList.add("دعاية و اعلان");
+                //osNameList.add("دعاية و اعلان");
                 osNameList.add("شنط و احذية");
+
                 //
-                osImages.add(R.drawable.byoty_frr);
-                osImages.add(R.drawable.kwaferrg_fr);
+               // osImages.add(R.drawable.byoty_frr);
+                // osImages.add(R.drawable.kwaferrg_fr);
                 osImages.add(R.drawable.mlabshremy_frr);
                 osImages.add(R.drawable.mlabsrgaly_frr);
                 osImages.add(R.drawable.langry_fr);
@@ -363,13 +386,13 @@ public class MainSubActivity extends AppCompatActivity {
                 osImages.add(R.drawable.dahab_frr);
                 osImages.add(R.drawable.bsryat_fr);
                 osImages.add(R.drawable.mlabsryady_fr);
-                osImages.add(R.drawable.tswer_fr);
-                osImages.add(R.drawable.msag_frr);
+                //osImages.add(R.drawable.tswer_fr);
+                //osImages.add(R.drawable.msag_frr);
                 osImages.add(R.drawable.frasha_fr);
-                osImages.add(R.drawable.wardy);
+               // osImages.add(R.drawable.wardy);
                 osImages.add(R.drawable.mosthdrat_fr);
                 osImages.add(R.drawable.khyat_frr);
-                osImages.add(R.drawable.daaya); //
+                //osImages.add(R.drawable.daaya); //
                 osImages.add(R.drawable.shonat);
 
                 //
@@ -411,6 +434,8 @@ public class MainSubActivity extends AppCompatActivity {
                 osNameList.add("ايجار سيارات");
                 osNameList.add("قطع غيار");
                 osNameList.add("اطارات و بطاريات");
+                osNameList.add("نقل اثاث");
+                osNameList.add("ونش انقاذ");
                 //
                 osImages.add(R.drawable.syanacars_frrr);
                 osImages.add(R.drawable.mghsla_fr);
@@ -420,6 +445,8 @@ public class MainSubActivity extends AppCompatActivity {
                 osImages.add(R.drawable.rent_car);
                 osImages.add(R.drawable.ketaaa);
                 osImages.add(R.drawable.etarat);
+                osImages.add(R.drawable.nkl_afsh);
+                osImages.add(R.drawable.wensh);
                 //
                 customAdabter =  new CustomAdabterFinal(this, osNameList, osImages , newStringTwo , newString) ;
                 gridview.setAdapter(customAdabter);
@@ -433,15 +460,43 @@ public class MainSubActivity extends AppCompatActivity {
                 osNameList.add("مدارس");
                 osNameList.add("حضانات");
                 osNameList.add("سنتر تعليمي");
+                osNameList.add("دروس خصوصية");
 
                 //
                 osImages.add(R.drawable.school_fr);
                 osImages.add(R.drawable.hdana_frr);
                 osImages.add(R.drawable.center_frr);
+                osImages.add(R.drawable.dros_khsosya);
                 //
                 CustomAdabterFinalWidth customAdabter_f =  new CustomAdabterFinalWidth(this, osNameList, osImages , newStringTwo , newString) ;
                 gridview.setNumColumns(1); ;
                 gridview.setAdapter(customAdabter_f);
+
+            }
+            else if (newString.equals("حفلات ومناسبات")) {
+                //
+                osNameList = new ArrayList<>() ;
+                osImages = new ArrayList<>() ;
+                //
+                osNameList.add("بيوتي سنتر حريمي");
+                osNameList.add("كوافير رجالي");
+                osNameList.add("تصوير");
+                osNameList.add("مساج وسبا");
+                osNameList.add("زهور");
+                osNameList.add("دعاية و اعلان");
+                osNameList.add("تنظيم حفلات");
+                //
+                osImages.add(R.drawable.byoty_frr);
+                osImages.add(R.drawable.kwaferrg_fr);
+                osImages.add(R.drawable.tswer_fr);
+                osImages.add(R.drawable.msag_frr);
+                osImages.add(R.drawable.wardy);
+                osImages.add(R.drawable.daaya); //
+                osImages.add(R.drawable.tanzeem);
+
+                //
+                customAdabter =  new CustomAdabterFinal(this, osNameList, osImages , newStringTwo , newString) ;
+                gridview.setAdapter(customAdabter);
 
             }
             else if (newString.equals("جيم و رياضة")) {
@@ -498,9 +553,11 @@ public class MainSubActivity extends AppCompatActivity {
                 osImages = new ArrayList<>() ;
                 //
                 osNameList.add("شركات عقارية");
+                osNameList.add("عقارات افراد");
                 osNameList.add("تشطيبات وديكور");
                 //
                 osImages.add(R.drawable.akarya);
+                osImages.add(R.drawable.afrad_akarat_ch);
                 osImages.add(R.drawable.decor);
                 //
                 CustomAdabterFinalWidth customAdabter_f =  new CustomAdabterFinalWidth(this, osNameList, osImages , newStringTwo , newString) ;
@@ -676,7 +733,6 @@ public class MainSubActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -686,78 +742,41 @@ public class MainSubActivity extends AppCompatActivity {
 
 
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        swipeTimer = new Timer();
+    }
+
+
+
+    private void backky () {
+        ImageView back  = (ImageView) findViewById(R.id.backyy) ;
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext() , MainActivity.class));
+            }
+        });
+
+    }
+
+
     private void init(String s) {
 
 
-        imagesView = new ArrayList<>() ;
-        kind = new ArrayList<>() ;
-
-        if (newString.equals("سيارات")) {
-            imagesView.add(R.drawable.logo);
-            imagesView.add(R.drawable.logo);
-            imagesView.add(R.drawable.one_el); //
-
-            imagesView.add(R.drawable.logo);
-            imagesView.add(R.drawable.logo);
-            imagesView.add(R.drawable.one_el); //
-
-
-
-
-            kind.add("gif");
-            kind.add("adv");
-            kind.add("pic");
-
-            kind.add("gif");
-            kind.add("adv");
-            kind.add("pic");
+        if (imagesView.size() == 0) {
+            imagesView.add("gif");
+            kind.add("gif") ;
         }
-        else  if (newString.equals("اثاث منزلي")) {
-            imagesView.add(R.drawable.logo);
-            imagesView.add(R.drawable.logo);
-            imagesView.add(R.drawable.nadystores); //
-
-            imagesView.add(R.drawable.logo);
-            imagesView.add(R.drawable.logo);
-            imagesView.add(R.drawable.nadystores); //
-
-
-            kind.add("gif");
-            kind.add("adv");
-            kind.add("pic");
-
-            kind.add("gif");
-            kind.add("adv");
-            kind.add("pic");
-        }
-        else {
-            imagesView.add(R.drawable.logo);
-            imagesView.add(R.drawable.logo);
-
-            imagesView.add(R.drawable.logo);
-            imagesView.add(R.drawable.logo);
-
-
-
-
-            kind.add("gif");
-            kind.add("adv");
-
-            kind.add("gif");
-            kind.add("adv");
-        }
-
-
-
-
-
-
 
 
         mPager = (ViewPager) findViewById(R.id.pager);
 
 
-        mPager.setAdapter(new ViewPagerAbater(MainSubActivity.this, imagesView , s , kind));
+        mPager.setAdapter(new ViewPagerAbaterDownload(MainSubActivity.this, imagesView , s , kind ));
         mPager.setPageTransformer(true, new RotateUpTransformer());
 
 
@@ -788,6 +807,7 @@ public class MainSubActivity extends AppCompatActivity {
         setTimer(mPager , 4);
 
 
+
         // Pager listener over indicator
        /* indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -809,11 +829,107 @@ public class MainSubActivity extends AppCompatActivity {
         }); */
 
     }
+    public void removeOpj (int s) {
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        swipeTimer = new Timer();
+        final String[] list = new String[]{"مسح الاعلان", "الغاء"};
+        new AlertDialog.Builder(MainSubActivity.this)
+                .setTitle("Language")
+                .setItems(list, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(MainSubActivity.this, list[which], Toast.LENGTH_SHORT).show();
+                        if (list[which].equals("مسح الاعلان")) {
+                            mDatabase.child(imagesIds.get(s)).setValue(null);
+
+                            Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(i);
+                        }else if (list[which].equals("الغاء")) {
+
+                        }
+                        else {
+
+                        }
+                    }
+                })
+                .show();
+
+    }
+
+    private void getData(String data_op) {
+
+        imagesView = new ArrayList<>() ;
+        kind = new ArrayList<>() ;
+
+
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("sponser").child(newString).child("elements").child("main");
+        mDatabase.addChildEventListener(new ChildEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                for(DataSnapshot childSnapShot : dataSnapshot.getChildren()) {
+
+                    if (childSnapShot.getKey().equals("name")) {
+
+
+                        //imagesView.add("logo");
+                        if (dataSnapshot.hasChild("profile_img")) {
+                            imagesView.add(dataSnapshot.child("profile_img").getValue().toString()); //
+                            imagesIds.add(dataSnapshot.getKey().toString());
+                            kind.add("pic");
+                            test_modules++;
+                        }
+                        else {
+                            imagesView.add("waiting") ;
+                            imagesIds.add("no");
+                            kind.add("pic");
+                            test_modules++;
+                        }
+
+                       /* if (imagesView.size() >= 3 && imagesView.size() % 3 == 0 ) {
+                            imagesView.add("gif");
+                            images_ids.add("no");
+                            kind.add("gif");
+                        }*/
+
+                        // final new
+                        if (test_modules >= 3 && test_modules % 3 == 0 ) {
+                            imagesView.add("gif");
+                            imagesIds.add("no");
+                            kind.add("gif");
+                        }
+
+                        //kind.add("adv");
+
+
+                    }
+
+                }
+                Collections.reverse(imagesView);
+                Collections.reverse(imagesIds);
+                Collections.reverse(kind);
+                init(data_op);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        }) ;
     }
 
     public void setTimer(final ViewPager myPager, int time){
@@ -839,18 +955,6 @@ public class MainSubActivity extends AppCompatActivity {
                 handler.post(Update);
             }
         }, 250, time*1000);
-    }
-
-    private void backky () {
-        ImageView back  = (ImageView) findViewById(R.id.backyy) ;
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext() , MainActivity.class));
-            }
-        });
-
     }
 
 

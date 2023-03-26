@@ -40,7 +40,7 @@ import java.util.UUID;
 public class AddAdminActivity extends AppCompatActivity {
 
     private Button login ;
-    private EditText editText_name , editText_address , editText_tel , editText_gate ;
+    private EditText editText_name , editText_address , editText_tel , editText_gate , editText_tel_two ;
     private DatabaseReference current_user_db ;
     private String name , address , telephone , gate ;
     private TextView kind_txt  , kind_txt_main ;
@@ -78,6 +78,7 @@ public class AddAdminActivity extends AppCompatActivity {
         kind_txt = (TextView) findViewById(R.id.kind) ;
         kind_txt_main = (TextView) findViewById(R.id.kind_main) ;
         img_one = (ImageView) findViewById(R.id.imgProfile1) ;
+        editText_tel_two = (EditText) findViewById(R.id.input_telefone_two) ;
 
 
         img_one.setOnClickListener(new View.OnClickListener() {
@@ -122,6 +123,7 @@ public class AddAdminActivity extends AppCompatActivity {
                 items.add("شركات الاتصالات") ;
                 items.add("موبيلات") ;
                 items.add("ترفيهي");
+                items.add("حفلات ومناسبات") ;
 
 
                 final String[] list = getStringArray(items);
@@ -172,6 +174,7 @@ public class AddAdminActivity extends AppCompatActivity {
                 else if (newStringz.equals("ترفيهي")){
                     osNameList.add("Playstation");
                     osNameList.add("ملاعب كرة");
+                    osNameList.add("العاب اطفال");
                 }
                 else if (newStringz.equals("مطاعم")) {
                     //
@@ -275,6 +278,21 @@ public class AddAdminActivity extends AppCompatActivity {
 
 
                 }
+                else if (newStringz.equals("حفلات ومناسبات")) {
+                    //
+                    osNameList = new ArrayList<>() ;
+                    //
+                    osNameList.add("بيوتي سنتر حريمي");
+                    osNameList.add("كوافير رجالي");
+                    osNameList.add("تصوير");
+                    osNameList.add("زهور");
+                    osNameList.add("دعاية و اعلان");
+                    osNameList.add("تنظيم حفلات");
+                    osNameList.add("مساج وسبا");
+                    //
+
+
+                }
                 else if (newStringz.equals("اجهزة الكترونية")) {
                     //
                     osNameList = new ArrayList<>() ;
@@ -298,6 +316,8 @@ public class AddAdminActivity extends AppCompatActivity {
                     osNameList.add("ايجار سيارات");
                     osNameList.add("قطع غيار");
                     osNameList.add("اطارات و بطاريات");
+                    osNameList.add("نقل اثاث");
+                    osNameList.add("ونش انقاذ");
 
 
                 }
@@ -308,6 +328,7 @@ public class AddAdminActivity extends AppCompatActivity {
                     osNameList.add("مدارس");
                     osNameList.add("حضانات");
                     osNameList.add("سنتر تعليمي");
+                    osNameList.add("دروس خصوصية");
 
 
                 }
@@ -333,6 +354,7 @@ public class AddAdminActivity extends AppCompatActivity {
                     osNameList = new ArrayList<>() ;
                     //
                     osNameList.add("شركات عقارية");
+                    osNameList.add("عقارات افراد");
                     osNameList.add("تشطيبات وديكور");
                     //
 
@@ -512,6 +534,11 @@ public class AddAdminActivity extends AppCompatActivity {
         map.put("name", name);
         map.put("address", address);
         map.put("telephone", telephone);
+        if (editText_tel_two.getText() != null) {
+            map.put("telephone_two", editText_tel_two.getText().toString());
+        }else {
+            map.put("telephone_two", "off");
+        }
         map.put("gate", gate);
         map.put("deactive", "no");
         map.put("kind", sub);
@@ -593,8 +620,15 @@ public class AddAdminActivity extends AppCompatActivity {
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
                             HashMap map_sp = new HashMap();
-                            map_sp.put("profile_img", taskSnapshot.getDownloadUrl().toString());
-                            current.updateChildren(map_sp) ;
+                            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Uri downloadUrl = uri;
+                                    map_sp.put("profile_img", downloadUrl.toString());
+                                    current.updateChildren(map_sp) ;
+                                }
+                            });
+
                             Toast.makeText(AddAdminActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
                         }
                     })

@@ -22,8 +22,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.kobtan.fahmy.hadayekelahram.News.NewsActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Set;
 import java.util.Timer;
 
@@ -31,20 +33,20 @@ public class FavouritsActvity extends AppCompatActivity {
 
     private ListView list ;
     private ArrayList<String> itemname = new ArrayList<>() ;
-    private ArrayList<String> itemprice = new ArrayList<>() ;
-    private ArrayList<String> itemtel = new ArrayList<>();
-    private ArrayList<String> itemdate = new ArrayList<>();
-    private ArrayList<String> itemimg = new ArrayList<>();
-    private ArrayList<String> itemgate = new ArrayList<>();
+    private ArrayList<String> itemTelephone = new ArrayList<>() ;
+    private ArrayList<String> itemDetails = new ArrayList<>() ;
+    private ArrayList<String> itemPostImages = new ArrayList<>() ;
+    private ArrayList<String> itemLogoImages = new ArrayList<>() ;
+    private ArrayList<String> itemaddress = new ArrayList<>() ;
+    private ArrayList<String> itemdate = new ArrayList<>() ;
+    private ArrayList<String> itemkey = new ArrayList<>() ;
 
-    private ArrayList<String> itemkey = new ArrayList<>();
-    private ArrayList<String> itemkeyMember = new ArrayList<>();
 
     private TextView title ;
     private Typeface typeface ;
     private String newString , newStringtwo;
 
-    private CustomListAdapterBuy adapter ;
+    private CustomListAdapterNews adapter ;
     private DatabaseReference mCustomerDatabase;
 
     private SharedPreferences mSharedPreferences ;
@@ -75,7 +77,7 @@ public class FavouritsActvity extends AppCompatActivity {
 
 
 
-            mCustomerDatabase = FirebaseDatabase.getInstance().getReference().child("buy");
+            mCustomerDatabase = FirebaseDatabase.getInstance().getReference().child("news");
 
 
             getUserInfo();
@@ -110,43 +112,56 @@ public class FavouritsActvity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 for(DataSnapshot childSnapShot : dataSnapshot.getChildren()) {
-                    if (childSnapShot.hasChildren()) {
-                    for (DataSnapshot subSnapShot : childSnapShot.getChildren()) {
-                        if (subSnapShot.getKey().equals("name")) {
 
-                            if (colorsSet != null) {
-                                for (String color : colorsSet) {
-                                    if (childSnapShot.getKey().equals(color)) {
+                    if (childSnapShot.getKey().equals("name")) {
 
-                                        itemname.add(subSnapShot.getValue().toString());
-                                        itemtel.add(childSnapShot.child("telephone").getValue().toString());
-                                        itemprice.add(childSnapShot.child("price").getValue().toString());
-                                        itemdate.add(childSnapShot.child("date").getValue().toString());
-                                        itemgate.add(childSnapShot.child("gate").getValue().toString());
-                                        itemkeyMember.add(childSnapShot.child("memberID").getValue().toString());
+                        if (colorsSet != null) {
+                            for (String color : colorsSet) {
+                                if (dataSnapshot.getKey().equals(color)) {
 
 
-                                        if (childSnapShot.hasChild("img_0")) {
-                                            itemimg.add(childSnapShot.child("img_0").getValue().toString());
-                                        } else {
-                                            itemimg.add("waiting");
-                                        }
-                                        itemkey.add(childSnapShot.getKey().toString());
-
-                                    }
-                                }
-
-
-
-                            }
+                        itemname.add(childSnapShot.getValue().toString());
+                        itemTelephone.add(dataSnapshot.child("telephone").getValue().toString());
+                        itemDetails.add(dataSnapshot.child("details").getValue().toString());
+                        if (dataSnapshot.hasChild("post_img")) {
+                            itemPostImages.add(dataSnapshot.child("post_img").getValue().toString());
+                        } else {
+                            itemPostImages.add("waiting");
                         }
+                        if (dataSnapshot.hasChild("address")) {
+                            itemaddress.add(dataSnapshot.child("address").getValue().toString());
+                        } else {
+                            itemaddress.add("address");
+                        }
+                        if (dataSnapshot.hasChild("date")) {
+                            itemdate.add(dataSnapshot.child("date").getValue().toString());
+                        } else {
+                            itemdate.add("1-2-2020");
+                        }
+
+                        itemLogoImages.add(dataSnapshot.child("profile_img").getValue().toString());
+
+
+                        itemkey.add(dataSnapshot.getKey().toString());
+
                     }
-                    }
-                    //Log.i("Ameeer" , childSnapShot.toString() ) ;
+                }}}
 
                 }
-                adapter = new CustomListAdapterBuy(FavouritsActvity.this, itemname , itemprice, itemimg , itemtel , itemdate, itemgate, itemkey);
+
+                Collections.reverse(itemname);
+                Collections.reverse(itemTelephone);
+                Collections.reverse(itemDetails);
+                Collections.reverse(itemPostImages);
+                Collections.reverse(itemLogoImages);
+                Collections.reverse(itemaddress);
+                Collections.reverse(itemdate);
+                Collections.reverse(itemkey);
+
+
+                adapter = new CustomListAdapterNews(FavouritsActvity.this, itemname , itemTelephone, itemDetails , itemPostImages , itemLogoImages , itemaddress , itemdate , itemkey );
                 list.setAdapter(adapter);
+
             }
 
             @Override
@@ -177,7 +192,7 @@ public class FavouritsActvity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         Intent i = new Intent(getApplicationContext(), MainActivity.class);
-        i.putExtra("STRING_I_NEED3", "buy");
+        //i.putExtra("STRING_I_NEED3", "buy");
         startActivity(i);
         finish();
     }
@@ -189,7 +204,7 @@ public class FavouritsActvity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                i.putExtra("STRING_I_NEED3", "buy");
+                //i.putExtra("STRING_I_NEED3", "buy");
                 startActivity(i);
                 finish();
             }

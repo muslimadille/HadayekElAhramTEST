@@ -54,6 +54,7 @@ public class CustomAdabter extends BaseAdapter {
 
     public void  getData() {
         result_en.add("Restaurants");
+        result_en.add("Saratn ElSady");
         result_en.add("Shopping") ;
         result_en.add("Fashion & Clothes");
         result_en.add("Hospitals");
@@ -61,6 +62,9 @@ public class CustomAdabter extends BaseAdapter {
         result_en.add("Pharmacies");
         result_en.add("Laboratories");
         result_en.add("Educational");
+
+        result_en.add("Festivals"); //new 1
+
         result_en.add("Gym & Sports");
         result_en.add("Electronics");
         result_en.add("Real estates");
@@ -242,6 +246,13 @@ public class CustomAdabter extends BaseAdapter {
                     i.putExtra("STRING_I_NEED_TWO", colorID.get(position));
                     context.startActivity(i);
                 }
+                else if (selecteditem.equals("حفلات ومناسبات"))
+                {
+                    Intent i = new Intent(context, MainSubActivity.class);
+                    i.putExtra("STRING_I_NEED", selecteditem);
+                    i.putExtra("STRING_I_NEED_TWO", colorID.get(position));
+                    context.startActivity(i);
+                }
                 else if (selecteditem.equals("ماكينات الصرافة"))
                 {
                     Intent i = new Intent(context, MainSubActivity.class);
@@ -302,6 +313,10 @@ public class CustomAdabter extends BaseAdapter {
                 }
                 else if (selecteditem.equals("اعلن معنا")) {
                     Intent i = new Intent(context, AdvWithUsActivity.class);
+                    context.startActivity(i);
+                }
+                else if (selecteditem.equals("حملة سرطان الثدى")) {
+                    Intent i = new Intent(context, SignToSaratnActivity.class);
                     context.startActivity(i);
                 }
                 else

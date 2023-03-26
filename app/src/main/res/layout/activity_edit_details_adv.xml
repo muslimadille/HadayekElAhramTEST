@@ -260,6 +260,7 @@
                 android:textColor="@android:color/black"
                 />
 
+
             <Button
                 android:id="@+id/input_bwaba"
                 android:layout_width="match_parent"

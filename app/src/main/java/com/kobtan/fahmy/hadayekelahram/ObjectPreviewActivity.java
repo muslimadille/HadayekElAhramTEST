@@ -3,10 +3,13 @@ package com.kobtan.fahmy.hadayekelahram;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,20 +22,26 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.eftimoff.viewpagertransformers.RotateUpTransformer;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.kobtan.fahmy.hadayekelahram.AddNewAdv.AddNewAdvProductActivity;
+import com.kobtan.fahmy.hadayekelahram.News.AddNewsActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Timer;
+import java.util.TimerTask;
 
 public class ObjectPreviewActivity extends AppCompatActivity {
 
@@ -44,7 +53,9 @@ public class ObjectPreviewActivity extends AppCompatActivity {
     private RatingBar ratingBar ;
     private DatabaseReference mCustomerDatabase ;
 
-    private TextView name , address , telephone , kind ;
+    private TextView name_link ,value_link ;
+
+    private TextView name , address , telephone , kind , kind_title , instagram , whatsappp ;
     private String newString , newString2 , newString3 ;
     private int newStringThree = 0 ;
     private ImageView img_call  , img_map;
@@ -58,6 +69,17 @@ public class ObjectPreviewActivity extends AppCompatActivity {
     private Uri call ;
     float rate_s = 11 ;
     private String img_url = "off" ;
+    private RelativeLayout main_layout ;
+    private String FacebookLink = "off" ;
+
+
+    private static ViewPager mPager_new;
+    private static int currentPage_new = 0;
+    private static int NUM_PAGES_new = 0;
+    private ArrayList<String> imagesView_new  = new ArrayList<>();
+    final Handler handler_new = new Handler();
+    public Timer swipeTimer_new ;
+
 
 
     @Override
@@ -124,6 +146,12 @@ public class ObjectPreviewActivity extends AppCompatActivity {
         img_map = (ImageView) findViewById(R.id.dob) ;
         b_choosen = (Button) findViewById(R.id.choose) ;
         b_sponser = (Button) findViewById(R.id.addsponser) ;
+        name_link  =(TextView) findViewById(R.id.textView5) ;
+        value_link  =(TextView) findViewById(R.id.education) ;
+        kind_title  =(TextView) findViewById(R.id.textView7) ;
+        main_layout  =(RelativeLayout) findViewById(R.id.layout) ;
+        whatsappp  = findViewById(R.id.whatsappp) ;
+        instagram  =findViewById(R.id.instagram) ;
 
         if (newString != null)
         {
@@ -154,12 +182,49 @@ public class ObjectPreviewActivity extends AppCompatActivity {
                 img_call.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        String number = telephone.getText().toString();
-                        call = Uri.parse("tel:" + number);
-                        Intent surf = new Intent(Intent.ACTION_DIAL, call);
-                        startActivity(surf);
+                        if (kind_title.getText().toString().equals("Kind: ")) {
+                            String number = telephone.getText().toString();
+                            call = Uri.parse("tel:" + number);
+                            Intent surf = new Intent(Intent.ACTION_DIAL, call);
+                            startActivity(surf);
 
-                        Toast.makeText(getApplicationContext(), "Calling", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Calling", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            ArrayList<String> items = new ArrayList<String>();
+
+                            items.add(telephone.getText().toString()) ;
+                            items.add(kind.getText().toString()) ;
+
+
+
+
+                            MaterialDialog matrial = new MaterialDialog.Builder(ObjectPreviewActivity.this)
+                                    .title("الخيارات")
+                                    .items(items)
+                                    .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                                        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                                        @Override
+                                        public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+
+                                            if (text != null) {
+                                                String number = telephone.getText().toString();
+                                                call = Uri.parse("tel:" + text);
+                                                Intent surf = new Intent(Intent.ACTION_DIAL, call);
+                                                startActivity(surf);
+
+                                                Toast.makeText(getApplicationContext(), "Calling", Toast.LENGTH_SHORT).show();
+                                            }
+
+                                            return true;
+                                        }
+                                    })
+                                    .positiveText("تأكيد الإختيار")
+                                    .buttonRippleColorRes(R.color.colorAccent)
+                                    .backgroundColorRes(R.color.colorAccent)
+                                    .show();
+                        }
+
                     }
                 });
 
@@ -173,111 +238,172 @@ public class ObjectPreviewActivity extends AppCompatActivity {
             }
         });
 
-        //b_sponser.setAlpha(0);
+        //main_layout.removeView(b_choosen);
+        //main_layout.removeView(b_sponser);
 
-        b_sponser.setOnClickListener(new View.OnClickListener() {
+        b_sponser.setAlpha(0);
+
+//        b_sponser.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//
+//                if (newString2 != null)
+//                {
+//
+//                    Intent i = new Intent(getApplicationContext() , SponserAddActivity.class) ;
+//                    i.putExtra("STRING_I_NEED" , newString3) ;
+//                    i.putExtra("STRING_I_NEED2" , name.getText().toString()) ;
+//                    i.putExtra("STRING_I_NEED3" , newString) ;
+//                    i.putExtra("STRING_I_NEED4" , newString2) ;
+//                    i.putExtra("STRING_I_NEED5" , img_url) ;
+//                    startActivity(i);
+//
+//
+//                }
+//                else
+//                {
+//
+//                    Intent i = new Intent(getApplicationContext() , SponserAddActivity.class) ;
+//                    i.putExtra("STRING_I_NEED" , newString3) ;
+//                    i.putExtra("STRING_I_NEED2" , name.getText().toString()) ;
+//                    i.putExtra("STRING_I_NEED3" , newString) ;
+//                    i.putExtra("STRING_I_NEED4" , "off") ;
+//                    i.putExtra("STRING_I_NEED5" , img_url) ;
+//                    startActivity(i);
+//
+//                }
+//
+//            }
+//
+//        });
+
+       b_choosen.setAlpha(0);
+
+//       b_choosen.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                ArrayList<String> items = new ArrayList<String>();
+//
+//                items.add("مسح الاعلان") ;
+//                items.add("تعديل الإعلان") ;
+//                items.add("نقل الاعلان") ;
+//                items.add("الصور الاعلانية") ;
+//                items.add("عروض الاعلان") ;
+//
+//
+//
+//
+//                MaterialDialog matrial = new MaterialDialog.Builder(ObjectPreviewActivity.this)
+//                        .title("الخيارات")
+//                        .items(items)
+//                        .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+//                            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+//                            @Override
+//                            public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+//
+//                                if (text != null) {
+//
+//                                    if (text == "مسح الاعلان" ) {
+//                                        removeOpj(newString3);
+//                                    }
+//                                    if (text == "الصور الاعلانية" ) {
+//                                        if (newString2 != null)
+//                                        {
+//                                            Intent i  = new Intent(getApplicationContext() , AddNewAdvProductActivity.class);
+//                                            i.putExtra("STRING_I_NEED" , newString) ;
+//                                            i.putExtra("STRING_I_NEED2" , newString2) ;
+//                                            i.putExtra("STRING_I_NEED3" , newString3) ;
+//                                            i.putExtra("STRING_I_NEED4" , newStringThree) ;
+//                                            startActivity(i);
+//                                        }
+//                                        else
+//                                        {
+//                                            Intent i  = new Intent(getApplicationContext() , AddNewAdvProductActivity.class);
+//                                            i.putExtra("STRING_I_NEED" , newString) ;
+//                                            i.putExtra("STRING_I_NEED3" , newString3) ;
+//                                            i.putExtra("STRING_I_NEED4" , newStringThree) ;
+//                                            startActivity(i);
+//
+//                                        }
+//
+//                                    }
+//                                    if (text == "عروض الاعلان" ) {
+//                                        Intent i  = new Intent(getApplicationContext() , AddNewsActivity.class);
+//                                        i.putExtra("STRING_I_NEED" , name.getText().toString()) ;
+//                                        i.putExtra("STRING_I_NEED2" , img_url) ;
+//                                        i.putExtra("STRING_I_NEED3" , newString3) ;
+//                                        i.putExtra("STRING_I_NEED4" , telephone.getText().toString()) ;
+//                                        i.putExtra("STRING_I_NEED5" , address.getText().toString()) ;
+//                                        startActivity(i);
+//                                    }
+//
+//                                    if (text == "تعديل الإعلان" ) {
+//
+//                                        if (newString2 != null)
+//                                        {
+//                                            Intent i  = new Intent(getApplicationContext() , EditProductActivity.class);
+//                                            i.putExtra("STRING_I_NEED" , newString) ;
+//                                            i.putExtra("STRING_I_NEED2" , newString2) ;
+//                                            i.putExtra("STRING_I_NEED3" , newString3) ;
+//                                            i.putExtra("STRING_I_NEED4" , newStringThree) ;
+//                                            startActivity(i);
+//                                        }
+//                                        else
+//                                        {
+//                                            Intent i  = new Intent(getApplicationContext() , EditProductActivity.class);
+//                                            i.putExtra("STRING_I_NEED" , newString) ;
+//                                            i.putExtra("STRING_I_NEED3" , newString3) ;
+//                                            i.putExtra("STRING_I_NEED4" , newStringThree) ;
+//                                            startActivity(i);
+//
+//                                        }
+//
+//
+//                                    }
+//                                    if (text == "نقل الاعلان"){
+//                                        displayDialog();
+//                                    }
+//
+//                                }
+//
+//                                return true;
+//                            }
+//                        })
+//                        .positiveText("تأكيد الإختيار")
+//                        .buttonRippleColorRes(R.color.colorAccent)
+//                        .backgroundColorRes(R.color.colorAccent)
+//                        .show();
+//
+//            }
+//        });
+
+
+    }
+
+    private void goFacebookUrl () {
+        value_link.setTextColor(Color.BLUE);
+        value_link.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-                if (newString2 != null)
-                {
-
-                    Intent i = new Intent(getApplicationContext() , SponserAddActivity.class) ;
-                    i.putExtra("STRING_I_NEED" , newString3) ;
-                    i.putExtra("STRING_I_NEED2" , name.getText().toString()) ;
-                    i.putExtra("STRING_I_NEED3" , newString) ;
-                    i.putExtra("STRING_I_NEED4" , newString2) ;
-                    i.putExtra("STRING_I_NEED5" , img_url) ;
-                    startActivity(i);
-
-
-                }
-                else
-                {
-
-                    Intent i = new Intent(getApplicationContext() , SponserAddActivity.class) ;
-                    i.putExtra("STRING_I_NEED" , newString3) ;
-                    i.putExtra("STRING_I_NEED2" , name.getText().toString()) ;
-                    i.putExtra("STRING_I_NEED3" , newString) ;
-                    i.putExtra("STRING_I_NEED4" , "off") ;
-                    i.putExtra("STRING_I_NEED5" , img_url) ;
-                    startActivity(i);
-
-                }
-
+                Toast.makeText(ObjectPreviewActivity.this, "Openning Facebook Page Now !", Toast.LENGTH_LONG).show();
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(FacebookLink));
+                startActivity(browserIntent);
             }
-
         });
 
-       //b_choosen.setAlpha(0);
-
-        b_choosen.setOnClickListener(new View.OnClickListener() {
+    }
+    private void goInstagramUrl () {
+        instagram.setTextColor(Color.BLUE);
+        instagram.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                ArrayList<String> items = new ArrayList<String>();
-
-                items.add("مسح الاعلان") ;
-                items.add("تعديل الإعلان") ;
-                items.add("نقل الاعلان") ;
-
-
-
-
-                MaterialDialog matrial = new MaterialDialog.Builder(ObjectPreviewActivity.this)
-                        .title("الخيارات")
-                        .items(items)
-                        .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
-                            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-                            @Override
-                            public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-
-                                if (text != null) {
-
-                                    if (text == "مسح الاعلان" ) {
-                                        removeOpj(newString3);
-                                    }
-                                    if (text == "تعديل الإعلان" ) {
-
-                                        if (newString2 != null)
-                                        {
-                                            Intent i  = new Intent(getApplicationContext() , EditProductActivity.class);
-                                            i.putExtra("STRING_I_NEED" , newString) ;
-                                            i.putExtra("STRING_I_NEED2" , newString2) ;
-                                            i.putExtra("STRING_I_NEED3" , newString3) ;
-                                            i.putExtra("STRING_I_NEED4" , newStringThree) ;
-                                            startActivity(i);
-                                        }
-                                        else
-                                        {
-                                            Intent i  = new Intent(getApplicationContext() , EditProductActivity.class);
-                                            i.putExtra("STRING_I_NEED" , newString) ;
-                                            i.putExtra("STRING_I_NEED3" , newString3) ;
-                                            i.putExtra("STRING_I_NEED4" , newStringThree) ;
-                                            startActivity(i);
-
-                                        }
-
-
-                                    }
-                                    if (text == "نقل الاعلان"){
-                                        displayDialog();
-                                    }
-
-                                }
-
-                                return true;
-                            }
-                        })
-                        .positiveText("تأكيد الإختيار")
-                        .buttonRippleColorRes(R.color.colorAccent)
-                        .backgroundColorRes(R.color.colorAccent)
-                        .show();
-
+                Toast.makeText(ObjectPreviewActivity.this, "Openning Instagram Page Now !", Toast.LENGTH_LONG).show();
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(instagram.getText().toString()));
+                startActivity(browserIntent);
             }
         });
-
 
     }
 
@@ -289,14 +415,34 @@ public class ObjectPreviewActivity extends AppCompatActivity {
                 if (dataSnapshot.getKey().toString().equals(newString3))
                 {
 
-
                     if (dataSnapshot.hasChild("name")) {
 
-                        name.setText(dataSnapshot.child("name").getValue().toString());
+                            name.setText(dataSnapshot.child("name").getValue().toString());
+                            //Toast.makeText(ObjectPreviewActivity.this, "not here", Toast.LENGTH_SHORT).show();
+                    }
+                    if (dataSnapshot.hasChild("website")) {
+
+                        if (dataSnapshot.child("website").getValue().toString().equals("no")) {
+
+                        }else {
+                            name_link.setText("Facebook: ");
+                            FacebookLink = dataSnapshot.child("website").getValue().toString() ;
+                            value_link.setText("Facebook Page");
+                            goFacebookUrl();
+                        }
                     }
                     if (dataSnapshot.hasChild("telephone")) {
 
                         telephone.setText(dataSnapshot.child("telephone").getValue().toString());
+                    }
+                    if (dataSnapshot.hasChild("instagram")) {
+
+                        instagram.setText(dataSnapshot.child("instagram").getValue().toString());
+                        goInstagramUrl();
+                    }
+                    if (dataSnapshot.hasChild("whatsapp")) {
+
+                        whatsappp.setText(dataSnapshot.child("whatsapp").getValue().toString());
                     }
                     if (dataSnapshot.hasChild("address")) {
 
@@ -306,9 +452,15 @@ public class ObjectPreviewActivity extends AppCompatActivity {
 
                         ratingBar.setRating(Float.valueOf(dataSnapshot.child("rating").getValue().toString()));
                     }
-                    if (dataSnapshot.hasChild("kind")) {
 
-                        kind.setText(dataSnapshot.child("kind").getValue().toString());
+                    if (dataSnapshot.hasChild("telephone_two")) {
+                        kind_title.setText( "Mobile: ");
+                        kind.setText(dataSnapshot.child("telephone_two").getValue().toString());
+                    }else {
+                        if (dataSnapshot.hasChild("kind")) {
+                            kind_title.setText( "Kind: ");
+                            kind.setText(dataSnapshot.child("kind").getValue().toString());
+                        }
                     }
 
                     if (dataSnapshot.hasChild("profile_img"))
@@ -349,6 +501,22 @@ public class ObjectPreviewActivity extends AppCompatActivity {
                             imagesView.add(dataSnapshot.child("profile_img5").getValue().toString());
                         }
                     }
+                    if(dataSnapshot.hasChild("new_adv")) {
+                        mCustomerDatabase.child(newString3).child("new_adv").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    imagesView_new.add(snapshot.getValue().toString());
+                                }
+                                init_new();
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        }) ;
+                    }
                     if (dataSnapshot.hasChild("map_long") && dataSnapshot.hasChild("map_ard") ) {
                         maplong = Double.valueOf(dataSnapshot.child("map_long").getValue().toString());
                         map_ard = Double.valueOf(dataSnapshot.child("map_ard").getValue().toString());
@@ -359,6 +527,7 @@ public class ObjectPreviewActivity extends AppCompatActivity {
                     }
                 }
                 init();
+
             }
 
             @Override
@@ -735,6 +904,7 @@ public class ObjectPreviewActivity extends AppCompatActivity {
                 items.add("شركات الاتصالات") ;
                 items.add("موبيلات") ;
                 items.add("ترفيهي");
+                items.add("حفلات ومناسبات");
 
 
                 final String[] list = getStringArray(items);
@@ -783,6 +953,7 @@ public class ObjectPreviewActivity extends AppCompatActivity {
                 else if (newStringz.equals("ترفيهي")){
                     osNameList.add("Playstation");
                     osNameList.add("ملاعب كرة");
+                    osNameList.add("العاب اطفال");
                 }
                 else if (newStringz.equals("مطاعم")) {
                     //
@@ -886,6 +1057,21 @@ public class ObjectPreviewActivity extends AppCompatActivity {
 
 
                 }
+                else if (newStringz.equals("حفلات ومناسبات")) {
+                    //
+                    osNameList = new ArrayList<>() ;
+                    //
+                    osNameList.add("بيوتي سنتر حريمي");
+                    osNameList.add("كوافير رجالي");
+                    osNameList.add("تصوير");
+                    osNameList.add("زهور");
+                    osNameList.add("دعاية و اعلان");
+                    osNameList.add("تنظيم حفلات");
+                    osNameList.add("مساج وسبا");
+                    //
+
+
+                }
                 else if (newStringz.equals("اجهزة الكترونية")) {
                     //
                     osNameList = new ArrayList<>() ;
@@ -909,6 +1095,8 @@ public class ObjectPreviewActivity extends AppCompatActivity {
                     osNameList.add("ايجار سيارات");
                     osNameList.add("قطع غيار");
                     osNameList.add("اطارات و بطاريات");
+                    osNameList.add("نقل اثاث");
+                    osNameList.add("ونش انقاذ");
 
 
                 }
@@ -919,6 +1107,7 @@ public class ObjectPreviewActivity extends AppCompatActivity {
                     osNameList.add("مدارس");
                     osNameList.add("حضانات");
                     osNameList.add("سنتر تعليمي");
+                    osNameList.add("دروس خصوصية");
 
 
                 }
@@ -944,6 +1133,7 @@ public class ObjectPreviewActivity extends AppCompatActivity {
                     osNameList = new ArrayList<>() ;
                     //
                     osNameList.add("شركات عقارية");
+                    osNameList.add("عقارات افراد");
                     osNameList.add("تشطيبات وديكور");
                     //
 
@@ -1126,6 +1316,68 @@ public class ObjectPreviewActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    private void init_new() {
+
+        mPager_new = (ViewPager) findViewById(R.id.pager_new);
+
+
+        mPager_new.setAdapter(new ViewPagerAbaterThree(ObjectPreviewActivity.this, imagesView_new));
+        mPager_new.setPageTransformer(true, new RotateUpTransformer());
+
+        //CirclePageIndicator indicator = (CirclePageIndicator)
+        //findViewById(R.id.indicator);
+
+        // indicator.setViewPager(mPager);
+
+        final float density = getResources().getDisplayMetrics().density;
+
+//Set circle indicator radius
+        // indicator.setRadius(5 * density);
+
+        NUM_PAGES_new =imagesView_new.size();
+
+        // Auto start of viewpager
+        final Handler handler = new Handler();
+        final Runnable Update = new Runnable() {
+            public void run() {
+                if (currentPage_new == NUM_PAGES_new) {
+                    currentPage_new = 0;
+                }
+                mPager_new.setCurrentItem(currentPage_new++, true);
+            }
+        };
+
+        setTimer(mPager_new , 4);
+
+    }
+
+
+    public void setTimer(final ViewPager myPager_new, int time){
+
+
+
+        final Runnable Update = new Runnable() {
+
+            int currentPage_new = 0 ;
+            public void run() {
+                if (currentPage_new == NUM_PAGES_new ) {
+                    currentPage_new = 0;
+                }
+                myPager_new.setCurrentItem(currentPage_new++, true);
+            }
+        };
+
+        swipeTimer_new = new Timer();
+        swipeTimer_new.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                handler_new.post(Update);
+            }
+        }, 250, time*1000);
     }
 
 

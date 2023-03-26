@@ -8,6 +8,9 @@
 
     <color name="transbernt">#00FFFFFF</color>
 
+    <color name="ref_gif">#980e04</color>
+    <color name="nn">#ff1800</color>
+
     <color name="colorOne">#99de33</color>
     <color name="colorTwo">#6bb55c</color>
     <color name="colorThree">#4b9b76</color>
@@ -39,6 +42,7 @@
 
     <color name="black">#FF0E0D0D</color>
 
+    <color name="saratanColor">#fdfdfd</color>
 
     <color name="colorPrimaryTwo">#FCCB0f</color>
     <color name="colorPrimaryThree">#686046</color>

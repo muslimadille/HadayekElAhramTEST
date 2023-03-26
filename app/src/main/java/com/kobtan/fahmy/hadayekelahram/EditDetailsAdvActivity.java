@@ -429,8 +429,14 @@ public class EditDetailsAdvActivity extends AppCompatActivity {
             filepath.child("img"+"_"+ k).putFile(getImageUri(EditDetailsAdvActivity.this,myBitmap)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Uri downloadURL = taskSnapshot.getDownloadUrl();
-                    urls.add(downloadURL.toString()) ;
+                    filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            Uri downloadUrl = uri;
+                            //Uri downloadURL = taskSnapshot.getDownloadUrl();
+                            urls.add(downloadUrl.toString()) ;
+                        }
+                    });
 
                 }
             });

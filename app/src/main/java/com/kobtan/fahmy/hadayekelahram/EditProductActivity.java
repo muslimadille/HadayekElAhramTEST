@@ -48,7 +48,7 @@ import java.util.UUID;
 public class EditProductActivity extends AppCompatActivity {
 
     private Button add_btn , bwaba_kind;
-    private EditText name_adv , address_adv , telephone_adv  , rate_adv ;
+    private EditText name_adv , address_adv , telephone_adv , telephone_adv_two  , rate_adv , link_adv , sort_adv , intsa_adv , whats_adv ;
     private ImageView img_one ;
     private LinearLayout linearLayout_img ;
 
@@ -130,8 +130,12 @@ public class EditProductActivity extends AppCompatActivity {
         name_adv = (EditText) findViewById(R.id.input_name) ;
         address_adv = (EditText) findViewById(R.id.input_address) ;
         telephone_adv = (EditText) findViewById(R.id.input_telefone) ;
+        intsa_adv = (EditText) findViewById(R.id.input_instagram) ;
+        whats_adv = (EditText) findViewById(R.id.input_whatsapp) ;
         rate_adv = (EditText) findViewById(R.id.input_rate) ;
-
+        link_adv = (EditText) findViewById(R.id.input_facebook) ;
+        sort_adv = (EditText) findViewById(R.id.input_sort) ;
+        telephone_adv_two = (EditText) findViewById(R.id.input_telefone_two) ;
 
         img_one = (ImageView) findViewById(R.id.imgProfile1) ;
         linearLayout_img = (LinearLayout) findViewById(R.id.liner_profileimagee) ;
@@ -258,8 +262,13 @@ public class EditProductActivity extends AppCompatActivity {
         map = new HashMap();
         map.put("name", name_adv.getText().toString());
         map.put("telephone", telephone_adv.getText().toString());
+        map.put("telephone_two", telephone_adv_two.getText().toString());
         map.put("address", address_adv.getText().toString());
         map.put("rating", rate_adv.getText().toString());
+        map.put("website", link_adv.getText().toString());
+        map.put("number", sort_adv.getText().toString());
+        map.put("instagram", intsa_adv.getText().toString());
+        map.put("whatsapp", whats_adv.getText().toString());
 
         if (bwaba_kind.getText().equals("")) {
             map.put("gate", "جميع البوابات");
@@ -321,8 +330,26 @@ public class EditProductActivity extends AppCompatActivity {
                     if (dataSnapshot.hasChild("telephone")) {
                         telephone_adv.setText(dataSnapshot.child("telephone").getValue().toString());
                     }
+                    if (dataSnapshot.hasChild("instagram")) {
+                        intsa_adv.setText(dataSnapshot.child("instagram").getValue().toString());
+                    }
+                    if (dataSnapshot.hasChild("whatsapp")) {
+                        whats_adv.setText(dataSnapshot.child("whatsapp").getValue().toString());
+                    }
                     if (dataSnapshot.hasChild("rating")) {
                         rate_adv.setText(dataSnapshot.child("rating").getValue().toString());
+                    }
+                    if (dataSnapshot.hasChild("website")) {
+                        link_adv.setText(dataSnapshot.child("website").getValue().toString());
+                    }
+                    if (dataSnapshot.hasChild("number")) {
+                        sort_adv.setText(dataSnapshot.child("number").getValue().toString());
+                    }
+                    if (dataSnapshot.hasChild("telephone_two")) {
+                        telephone_adv_two.setText(dataSnapshot.child("telephone_two").getValue().toString());
+                    }
+                    else {
+                        telephone_adv_two.setText("off");
                     }
 
                     if (dataSnapshot.hasChild("profile_img")) {
@@ -377,8 +404,14 @@ public class EditProductActivity extends AppCompatActivity {
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
                             HashMap map_sp = new HashMap();
-                            map_sp.put("profile_img", taskSnapshot.getDownloadUrl().toString());
-                            current.updateChildren(map_sp) ;
+                            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Uri downloadUrl = uri;
+                                    map_sp.put("profile_img", downloadUrl.toString());
+                                    current.updateChildren(map_sp) ;
+                                }
+                            });
                             Toast.makeText(EditProductActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
                         }
                     })

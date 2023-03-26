@@ -136,7 +136,92 @@
             android:layout_height="100dp"
             android:layout_alignParentTop="true" />
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_height="30dp" >
+        <!--
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="30dp"
+             android:background="@color/colorPrimary"
+             android:orientation="horizontal">
 
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:layout_weight="0.3"
+                 android:background="@color/twentyfour">
+                 <TextView
+                     android:layout_width="match_parent"
+                     android:gravity="center"
+                     android:textColor="@android:color/white"
+                     android:textStyle="bold"
+                     android:textSize="12dp"
+                     android:text="اعلن هنا ١٢ شهر ب ٤٠٠٠"
+                     android:layout_height="match_parent"/>
+
+             </LinearLayout>
+
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:layout_weight="0.3"
+                 android:background="@color/nn">
+                 <TextView
+                     android:layout_width="match_parent"
+                     android:gravity="center"
+                     android:textColor="@android:color/white"
+                     android:textStyle="bold"
+                     android:textSize="12dp"
+                     android:text="اعلن هنا ٦ شهور ب ٢٥٠٠"
+                     android:layout_height="match_parent"/>
+
+             </LinearLayout>
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:layout_weight="0.3"
+                 android:background="@color/one">
+                 <TextView
+                     android:layout_width="match_parent"
+                     android:gravity="center"
+                     android:textColor="@android:color/white"
+                     android:textStyle="bold"
+                     android:textSize="12dp"
+                     android:text="اعلن هنا ٣ شهور ب ١٥٠٠"
+                     android:layout_height="match_parent"/>
+
+             </LinearLayout>
+
+         </LinearLayout>
+         -->
+        <LinearLayout
+            android:id="@+id/lay_e3ln"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@color/nn"
+            android:layout_height="30dp" >
+            <TextView
+                android:id="@+id/text_e3ln"
+                android:layout_width="match_parent"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit ="marquee_forever"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:focusableInTouchMode="true"
+                android:scrollHorizontally="true"                       android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="16dp"
+                android:text="@string/_01018588855"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"

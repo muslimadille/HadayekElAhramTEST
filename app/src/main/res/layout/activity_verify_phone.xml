@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context=".uberuser.VerifyPhoneActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:id="@+id/tab"
+        android:orientation="horizontal"
+        android:background="@color/black"
+        >
+        <ImageButton
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ef_ic_arrow_back"
+            android:scaleType="fitStart"
+            android:id="@+id/back_btn"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="16dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:text="Verify"
+            android:id="@+id/tabe_name"
+            android:layout_marginEnd="50dp"
+            android:textColor="@android:color/white"
+            android:layout_marginRight="50dp" />
+
+
+    </LinearLayout>
+
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBlowWhite"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="please, enter the verification code we sent to your mobile"
+            android:padding="8dp"
+            android:textSize="18sp"
+            android:textColor="@color/black" />
+<!--
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+-->
+
+
+        <ProgressBar
+            android:layout_margin="40dp"
+            android:id="@+id/progressbar"
+            android:layout_below="@id/buttonSignIn"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/editTextCode"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="50dp"
+            android:layout_below="@id/textView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:digits="0123456789"
+            android:hint="enter your code here"
+            android:textColorHint="@android:color/black"
+            android:textColor="@android:color/black"
+            android:inputType="phone"
+            android:textSize="16sp"
+            android:maxLength="10" />
+
+        <Button
+            android:id="@+id/buttonSignIn"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/editTextCode"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/background_border_add"
+            android:text="verify"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white" />
+
+        <!--
+        <TextView
+            android:id="@+id/go_sign_in_txt"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:textColor="@color/colorPrimary"
+            android:text="Already have an account ? Sign In here"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/buttonSignIn"/>
+ -->
+    </RelativeLayout>
+
+</LinearLayout>

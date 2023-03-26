@@ -19,12 +19,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.messaging.RemoteMessage;
+
+import java.io.FileInputStream;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -35,6 +45,8 @@ public class StartActivity extends AppCompatActivity {
     private EditText nameEditText_Admin;
     private Button saveBtn_Admin ;
     public static boolean isAppRunning;
+    private AdView mAdView;
+    private String newString ;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -45,6 +57,54 @@ public class StartActivity extends AppCompatActivity {
 
         typeface = Typeface.createFromAsset(getAssets(), "font.ttf");
 
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        //mAdView.loadAd(adRequest);
+
+        mAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+               // Toast.makeText(StartActivity.this, "Loaded", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                // Code to be executed when an ad request fails.
+               // Toast.makeText(StartActivity.this, String.valueOf(errorCode), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdOpened() {
+               // Toast.makeText(StartActivity.this, "opend", Toast.LENGTH_SHORT).show();
+                // Code to be executed when an ad opens an overlay that
+                // covers the screen.
+            }
+
+            @Override
+            public void onAdClicked() {
+               // Toast.makeText(StartActivity.this, "clicked", Toast.LENGTH_SHORT).show();
+                // Code to be executed when the user clicks on an ad.
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+               // Toast.makeText(StartActivity.this, "left app", Toast.LENGTH_SHORT).show();
+                // Code to be executed when the user has left the app.
+            }
+
+            @Override
+            public void onAdClosed() {
+               // Toast.makeText(StartActivity.this, "closed", Toast.LENGTH_SHORT).show();
+                // Code to be executed when the user is about to return
+                // to the app after tapping on an ad.
+            }
+        });
 
         //  rotateLoading = (RotateLoading) findViewById(R.id.rotateloading);
 
@@ -114,7 +174,7 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (nameEditText_Admin.getText().toString().equals("")) {
-                    Toast.makeText(StartActivity.this, "Enter Password First", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(StartActivity.this, "Enter Password First", Toast.LENGTH_SHORT).show();
                 } else {
                     DatabaseReference admin = FirebaseDatabase.getInstance().getReference().child("admin");
                     admin.addValueEventListener(new ValueEventListener() {
@@ -123,10 +183,10 @@ public class StartActivity extends AppCompatActivity {
 
                             String password = dataSnapshot.getValue().toString();
                             if (nameEditText_Admin.getText().toString().equals(password)) {
-                                Toast.makeText(StartActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(StartActivity.this, "Success", Toast.LENGTH_SHORT).show();
 
                             } else {
-                                Toast.makeText(StartActivity.this, "Password incorrect", Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(StartActivity.this, "Password incorrect", Toast.LENGTH_SHORT).show();
                             }
 
                         }

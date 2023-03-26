@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:layout_gravity="start"
-    tools:openDrawer="start">
+    tools:openDrawer="end">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -57,27 +57,30 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:orientation="vertical"
                                     android:gravity="center"
-                                    android:background="@drawable/background_border_pager_main_new"
+                                    android:background="@drawable/background_border_pager_main_new_red_dark"
                                     >
-                                    <ImageView
-                                        android:layout_width="80dp"
-                                        android:layout_height="30dp"
-                                        android:paddingTop="2dp"
+                                    <pl.droidsonroids.gif.GifImageView
+                                        android:layout_width="100dp"
+                                        android:layout_height="match_parent"
+                                        android:paddingTop="5dp"
+                                        android:paddingBottom="5dp"
+                                        android:scaleType="fitXY"
                                         android:layout_gravity="center"
-                                        android:src="@drawable/olx">
-                                    </ImageView>
+                                        android:src="@drawable/nn">
+                                    </pl.droidsonroids.gif.GifImageView>
+
+<!--
                                     <TextView
                                         android:id="@+id/title"
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="بيع و شراء"
+                                        android:text="عروض و خصومات"
                                         android:textStyle="bold"
                                         android:gravity="center"
-                                        android:textSize="18dp"
+                                        android:textSize="12dp"
                                         android:textColor="@android:color/holo_red_dark"/>
-                                </LinearLayout>
+                           -->     </LinearLayout>
 
                             </LinearLayout>
 
@@ -137,7 +140,7 @@
                                         android:layout_width="match_parent"
                                         android:gravity="center"
                                         android:drawableLeft="@drawable/private_two"
-                                        android:text="بحث  سريع"
+                                        android:text="بحث  بالاسم"
                                         android:paddingLeft="20dp"
                                         android:textSize="18dp"
                                         android:textStyle="bold"
@@ -194,6 +197,92 @@
                 android:layout_height="120dp"
                 android:layout_alignParentTop="true" />
         </LinearLayout>
+          <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_height="30dp" >
+              <!--
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="30dp"
+                   android:background="@color/colorPrimary"
+                   android:orientation="horizontal">
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:layout_weight="0.3"
+                       android:background="@color/twentyfour">
+                       <TextView
+                           android:layout_width="match_parent"
+                           android:gravity="center"
+                           android:textColor="@android:color/white"
+                           android:textStyle="bold"
+                           android:textSize="12dp"
+                           android:text="اعلن هنا ١٢ شهر ب ٤٠٠٠"
+                           android:layout_height="match_parent"/>
+
+                   </LinearLayout>
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:layout_weight="0.3"
+                       android:background="@color/nn">
+                       <TextView
+                           android:layout_width="match_parent"
+                           android:gravity="center"
+                           android:textColor="@android:color/white"
+                           android:textStyle="bold"
+                           android:textSize="12dp"
+                           android:text="اعلن هنا ٦ شهور ب ٢٥٠٠"
+                           android:layout_height="match_parent"/>
+
+                   </LinearLayout>
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:layout_weight="0.3"
+                       android:background="@color/one">
+                       <TextView
+                           android:layout_width="match_parent"
+                           android:gravity="center"
+                           android:textColor="@android:color/white"
+                           android:textStyle="bold"
+                           android:textSize="12dp"
+                           android:text="اعلن هنا ٣ شهور ب ١٥٠٠"
+                           android:layout_height="match_parent"/>
+
+                   </LinearLayout>
+
+               </LinearLayout>
+               -->
+               <LinearLayout
+                   android:id="@+id/lay_e3ln"
+                   android:layout_width="match_parent"
+                   android:orientation="vertical"
+                   android:gravity="center"
+                   android:background="@color/nn"
+                   android:layout_height="30dp" >
+                   <TextView
+                       android:id="@+id/text_e3ln"
+                       android:layout_width="match_parent"
+                       android:singleLine="true"
+                       android:ellipsize="marquee"
+                       android:marqueeRepeatLimit ="marquee_forever"
+                       android:focusable="true"
+                       android:gravity="center_vertical"
+                       android:focusableInTouchMode="true"
+                       android:scrollHorizontally="true"                       android:textColor="@android:color/white"
+                       android:textStyle="bold"
+                       android:textSize="16dp"
+                       android:text="@string/_01018588855"
+                       android:layout_height="match_parent"/>
+
+               </LinearLayout>
+
+           </LinearLayout>
 
             <GridView
                 android:id="@+id/customgrid"
@@ -448,135 +537,136 @@
                 android:layout_marginTop="5dp"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:padding="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/add" />
+<!--                               <ImageView-->
+<!--                                    android:layout_width="40dp"-->
+<!--                                    android:layout_height="40dp"-->
+<!--                                    android:padding="5dp"-->
+<!--                                    android:layout_marginLeft="10dp"-->
+<!--                                    android:src="@drawable/add" />-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="5dp"
-                    android:text="اضف جديد"/>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/buys"
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:gravity="left"
-                android:layout_marginTop="5dp"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:padding="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/addph" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="5dp"
-                    android:text="الاعلانات"/>
-
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/update"
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:gravity="left"
-                android:layout_marginTop="5dp"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:padding="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/logoteb" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="5dp"
-                    android:text="التحقق من وجود تحديث"/>
-
-
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/addyhh"
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:gravity="left"
-                android:layout_marginTop="6dp"
-                android:layout_height="wrap_content">
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="match_parent"-->
+<!--                                    android:gravity="center"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:layout_marginLeft="5dp"-->
+<!--                                    android:text="اضف جديد"/>-->
 
 
 
+                            </LinearLayout>
 
-            </LinearLayout>
+                            <LinearLayout
+                                android:id="@+id/buys"
+                                android:layout_width="match_parent"
+                                android:orientation="horizontal"
+                                android:gravity="left"
+                                android:layout_marginTop="5dp"
+                                android:layout_height="wrap_content">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+<!--                                <ImageView-->
+<!--                                    android:layout_width="40dp"-->
+<!--                                    android:layout_height="40dp"-->
+<!--                                    android:padding="5dp"-->
+<!--                                    android:layout_marginLeft="10dp"-->
+<!--                                    android:src="@drawable/addph" />-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:id="@+id/texta"
-                    android:layout_above="@+id/text2"
-                    android:textSize="11dp"
-                    android:layout_centerHorizontal="true"
-                    android:textColor="@android:color/black"
-                    android:text="E.M.H @.1.0"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:id="@+id/text2"
-                    android:layout_centerHorizontal="true"
-                    android:textColor="@android:color/black"
-                    android:textSize="11dp"
-                    android:layout_above="@+id/fahmy"
-                    android:drawableRight="@drawable/egypt"
-                    android:text="Made In Egypt  "/>
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="match_parent"-->
+<!--                                    android:gravity="center"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:layout_marginLeft="5dp"-->
+<!--                                    android:text="الاعلانات"/>-->
 
 
-                <TextView
-                    android:id="@+id/fahmy"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textSize="13dp"
-                    android:layout_alignParentBottom="true"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:text="Offered By Mohamed Fahmy"/>
-
-            </RelativeLayout>
+                            </LinearLayout>
 
 
+                            <LinearLayout
+                                android:id="@+id/update"
+                                android:layout_width="match_parent"
+                                android:orientation="horizontal"
+                                android:gravity="left"
+                                android:layout_marginTop="5dp"
+                                android:layout_height="wrap_content">
 
-        </LinearLayout>
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:padding="5dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:src="@drawable/logoteb" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:textStyle="bold"
+                                    android:layout_marginLeft="5dp"
+                                    android:text="التحقق من وجود تحديث"/>
 
 
-    </com.google.android.material.navigation.NavigationView>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:id="@+id/addyhh"
+                                android:layout_width="match_parent"
+                                android:orientation="horizontal"
+                                android:gravity="left"
+                                android:layout_marginTop="6dp"
+                                android:layout_height="wrap_content">
 
 
-</androidx.drawerlayout.widget.DrawerLayout>
+
+
+                            </LinearLayout>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:id="@+id/texta"
+                                    android:layout_above="@+id/text2"
+                                    android:textSize="11dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:textColor="@android:color/black"
+                                    android:text="E.M.H @.1.0"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:id="@+id/text2"
+                                    android:layout_centerHorizontal="true"
+                                    android:textColor="@android:color/black"
+                                    android:textSize="11dp"
+                                    android:layout_above="@+id/fahmy"
+                                    android:drawableRight="@drawable/egypt"
+                                    android:text="Made In Egypt  "/>
+
+
+                                <TextView
+                                    android:id="@+id/fahmy"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:textStyle="bold"
+                                    android:textSize="13dp"
+                                    android:layout_alignParentBottom="true"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:text="Offered By Mohamed Fahmy"/>
+
+                            </RelativeLayout>
+
+
+
+                        </LinearLayout>
+
+
+                    </com.google.android.material.navigation.NavigationView>
+
+
+                </androidx.drawerlayout.widget.DrawerLayout>

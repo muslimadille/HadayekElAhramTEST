@@ -34,13 +34,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainChildActivity extends AppCompatActivity {
 
-
+    private TextView text_e3ln ;
     private ListView list ;
     private ArrayList<String> itemname = new ArrayList<>() ;
     private ArrayList<Float> itemrate = new ArrayList<>() ;
@@ -62,7 +63,7 @@ public class MainChildActivity extends AppCompatActivity {
     private static ViewPager mPager;
     private static int currentPage = 0;
     private static int NUM_PAGES = 0;
-    private ArrayList<Integer> imagesView  = new ArrayList<>();
+    private ArrayList<String> imagesView  = new ArrayList<>();
     private TextView text_kind ;
 
     final Handler handler = new Handler();
@@ -74,6 +75,9 @@ public class MainChildActivity extends AppCompatActivity {
     private  ArrayList<Double> maplong = new ArrayList<>();
     private  ArrayList<Double> map_ard = new ArrayList<>();
 
+    private ArrayList<String> imagedIds = new ArrayList<>();
+    private DatabaseReference mDatabase ;
+    private int test_modules ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,70 +126,12 @@ public class MainChildActivity extends AppCompatActivity {
         }
 
 
-
+        text_e3ln = findViewById(R.id.text_e3ln) ;
+        text_e3ln.setSelected(true);
 
         if (newStringtwo != null) {
             if (newString != null) {
-                if (newStringtwo.equals("اثاث منزلي")) {
-                    if (newString.equals("نجف و تحف"))
-                    {
-                        mCustomerDatabase = FirebaseDatabase.getInstance().getReference().child("all").child(newStringtwo).child("elements").child("نجف و تحف");
-
-                        getUserInfo();
-
-                        title.setText(newString);
-
-
-                        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view,
-                                                    final int position, long id) {
-
-                                String selecteditem = itemkey.get(position);
-
-
-                                Intent i = new Intent(getApplicationContext(), ObjectPreviewActivity.class);
-                                i.putExtra("STRING_I_NEED", newStringtwo);
-                                i.putExtra("STRING_I_NEED2", newString);
-                                i.putExtra("STRING_I_NEED3", itemkey.get(position));
-                                i.putExtra("STRING_I_NEED4", newStringThree);
-                                startActivity(i);
-
-
-                            }
-                        });
-                    }
-                    else {
-                        mCustomerDatabase = FirebaseDatabase.getInstance().getReference().child("all").child(newStringtwo).child("elements").child("اثاث");
-
-                        getUserInfo();
-
-                        title.setText(newString);
-
-
-                        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view,
-                                                    final int position, long id) {
-
-                                String selecteditem = itemkey.get(position);
-
-
-                                Intent i = new Intent(getApplicationContext(), ObjectPreviewActivity.class);
-                                i.putExtra("STRING_I_NEED", newStringtwo);
-                                i.putExtra("STRING_I_NEED2", newString);
-                                i.putExtra("STRING_I_NEED3", itemkey.get(position));
-                                i.putExtra("STRING_I_NEED4", newStringThree);
-                                startActivity(i);
-
-
-                            }
-                        });
-                    }
-                }
-                else if (newStringtwo.equals("دكتور خاص"))
+                if (newStringtwo.equals("دكتور خاص"))
                 {
                     mCustomerDatabase = FirebaseDatabase.getInstance().getReference().child("all").child(newStringtwo).child("elements").child(newString);
 
@@ -217,6 +163,7 @@ public class MainChildActivity extends AppCompatActivity {
                     });
                 }
                 else {
+
                 mCustomerDatabase = FirebaseDatabase.getInstance().getReference().child("all").child(newStringtwo).child("elements").child(newString);
 
                 getUserInfo();
@@ -282,7 +229,7 @@ public class MainChildActivity extends AppCompatActivity {
 
 
         init("all");
-
+        getData("all");
 
         text_kind.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -392,14 +339,12 @@ public class MainChildActivity extends AppCompatActivity {
         }
 
 
-
-
     }
 
     private void getUserInfo(){
         maplong = new ArrayList<>();
         map_ard = new ArrayList<>();
-        mCustomerDatabase.addChildEventListener(new ChildEventListener() {
+        mCustomerDatabase.orderByChild("number").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 for(DataSnapshot childSnapShot : dataSnapshot.getChildren()) {
@@ -446,10 +391,17 @@ public class MainChildActivity extends AppCompatActivity {
                     //Log.i("Ameeer" , childSnapShot.toString() ) ;
 
                 }
+                //Collections.reverse(itemkey);
+                //Collections.reverse(itemname);
+                //Collections.reverse(itemaddress);
+                //Collections.reverse(itemrate);
+               // Collections.reverse(itemimg);
+                //Collections.reverse(itemtel);
+               // Collections.reverse(maplong);
+                //Collections.reverse(map_ard);
 
                     adapter = new CustomListAdapterTwo(MainChildActivity.this, itemname , itemaddress, itemrate , itemimg , itemtel ,newStringThree , maplong , map_ard);
                     list.setAdapter(adapter);
-
 
             }
 
@@ -478,7 +430,7 @@ public class MainChildActivity extends AppCompatActivity {
     private void getUserInfoTwo(){
         maplong = new ArrayList<>();
         map_ard = new ArrayList<>();
-        mCustomerDatabase.addChildEventListener(new ChildEventListener() {
+        mCustomerDatabase.orderByChild("number").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 for(DataSnapshot childSnapShot : dataSnapshot.getChildren()) {
@@ -690,7 +642,7 @@ public class MainChildActivity extends AppCompatActivity {
 
 
     private void getUserInfoDoc(){
-        mCustomerDatabase.addChildEventListener(new ChildEventListener() {
+        mCustomerDatabase.orderByChild("number").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 for(DataSnapshot childSnapShot : dataSnapshot.getChildren()) {
@@ -755,114 +707,28 @@ public class MainChildActivity extends AppCompatActivity {
 
 
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        swipeTimer = new Timer();
+    }
+
+
     private void init(String s) {
 
 
-        imagesView = new ArrayList<>() ;
-        kind = new ArrayList<>() ;
+       // Toast.makeText(this, String.valueOf(imagesView.size()), Toast.LENGTH_LONG).show();
 
-        if (newString != null) {
-            if (newString.equals("مراكز صيانة")) {
-                imagesView.add(R.drawable.logo);
-                imagesView.add(R.drawable.logo);
-                imagesView.add(R.drawable.one_el); //
-
-                imagesView.add(R.drawable.logo);
-                imagesView.add(R.drawable.logo);
-                imagesView.add(R.drawable.one_el); //
-
-
-
-
-                kind.add("gif");
-                kind.add("adv");
-                kind.add("pic");
-
-                kind.add("gif");
-                kind.add("adv");
-                kind.add("pic");
-            }
-            else if (newString.equals("نجف و تحف")) {
-                imagesView.add(R.drawable.logo);
-                imagesView.add(R.drawable.logo);
-                imagesView.add(R.drawable.nadystores); //
-
-                imagesView.add(R.drawable.logo);
-                imagesView.add(R.drawable.logo);
-                imagesView.add(R.drawable.nadystores); //
-
-
-                kind.add("gif");
-                kind.add("adv");
-                kind.add("pic");
-
-                kind.add("gif");
-                kind.add("adv");
-                kind.add("pic");
-            }
-            else if (newString.equals("عيادات و مراكز طبية")) {
-                imagesView.add(R.drawable.logo);
-                imagesView.add(R.drawable.logo);
-                imagesView.add(R.drawable.nadyy); //
-
-                imagesView.add(R.drawable.logo);
-                imagesView.add(R.drawable.logo);
-                imagesView.add(R.drawable.nadyy); //
-
-
-                kind.add("gif");
-                kind.add("adv");
-                kind.add("pic");
-
-                kind.add("gif");
-                kind.add("adv");
-                kind.add("pic");
-            }
-            else {
-                imagesView.add(R.drawable.logo);
-                imagesView.add(R.drawable.logo);
-
-                imagesView.add(R.drawable.logo);
-                imagesView.add(R.drawable.logo);
-
-
-
-
-                kind.add("gif");
-                kind.add("adv");
-
-                kind.add("gif");
-                kind.add("adv");
-            }
+        if (imagesView.size() == 0) {
+            imagesView.add("gif");
+            kind.add("gif") ;
         }
-        else {
-            imagesView.add(R.drawable.logo);
-            imagesView.add(R.drawable.logo);
-
-            imagesView.add(R.drawable.logo);
-            imagesView.add(R.drawable.logo);
-
-
-
-
-            kind.add("gif");
-            kind.add("adv");
-
-            kind.add("gif");
-            kind.add("adv");
-        }
-
-
-
-
-
-
-
 
         mPager = (ViewPager) findViewById(R.id.pager);
 
 
-        mPager.setAdapter(new ViewPagerAbater(MainChildActivity.this, imagesView , s , kind));
+        mPager.setAdapter(new ViewPagerAbaterDownload(MainChildActivity.this, imagesView , s , kind ));
         mPager.setPageTransformer(true, new RotateUpTransformer());
 
 
@@ -893,6 +759,7 @@ public class MainChildActivity extends AppCompatActivity {
         setTimer(mPager , 4);
 
 
+
         // Pager listener over indicator
        /* indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -915,11 +782,114 @@ public class MainChildActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        swipeTimer = new Timer();
+    private void getData(String data_op) {
+
+        imagesView = new ArrayList<>() ;
+        kind = new ArrayList<>() ;
+        if (newStringtwo.equals("موبيلات") || newStringtwo.equals("مكاتب محاماه") || newStringtwo.equals("كافيهات") || newStringtwo.equals("صيدليات") || newStringtwo.equals("حيوانات اليفة") )
+        {
+            mDatabase = FirebaseDatabase.getInstance().getReference().child("sponser").child(newStringtwo).child("elements");
+
+        }
+        else {
+            mDatabase = FirebaseDatabase.getInstance().getReference().child("sponser").child(newStringtwo).child("elements").child(newString);
+        }
+        mDatabase.addChildEventListener(new ChildEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                for(DataSnapshot childSnapShot : dataSnapshot.getChildren()) {
+
+                    if (childSnapShot.getKey().equals("name")) {
+
+
+                        //imagesView.add("logo");
+                        if (dataSnapshot.hasChild("profile_img")) {
+                            imagesView.add(dataSnapshot.child("profile_img").getValue().toString()); //
+                            imagedIds.add(dataSnapshot.getKey().toString());
+                            kind.add("pic");
+                            test_modules++;
+                        }
+                        else {
+                            imagesView.add("waiting") ;
+                            imagedIds.add("no");
+                            kind.add("pic");
+                            test_modules++;
+                        }
+
+                       /* if (imagesView.size() >= 3 && imagesView.size() % 3 == 0 ) {
+                            imagesView.add("gif");
+                            images_ids.add("no");
+                            kind.add("gif");
+                        }*/
+
+                        // final new
+                        if (test_modules >= 3 && test_modules % 3 == 0 ) {
+                            imagesView.add("gif");
+                            imagedIds.add("no");
+                            kind.add("gif");
+                        }
+
+                        //kind.add("adv");
+
+
+
+                    }
+
+                }
+                Collections.reverse(imagesView);
+                Collections.reverse(imagedIds);
+                Collections.reverse(kind);
+                init(data_op);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        }) ;
     }
+    public void removeOpj (int s) {
+
+        final String[] list = new String[]{"مسح الاعلان", "الغاء"};
+        new AlertDialog.Builder(MainChildActivity.this)
+                .setTitle("Language")
+                .setItems(list, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(MainChildActivity.this, list[which], Toast.LENGTH_SHORT).show();
+                        if (list[which].equals("مسح الاعلان")) {
+                            mDatabase.child(imagedIds.get(s)).setValue(null);
+
+                            Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(i);
+                        }else if (list[which].equals("الغاء")) {
+
+                        }
+                        else {
+
+                        }
+                    }
+                })
+                .show();
+
+    }
+
 
     public void setTimer(final ViewPager myPager, int time){
 

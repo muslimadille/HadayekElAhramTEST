@@ -12,16 +12,21 @@ import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.text.format.DateFormat;
 
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.kobtan.fahmy.hadayekelahram.News.NewsActivity;
 import com.kobtan.fahmy.hadayekelahram.R;
 import com.kobtan.fahmy.hadayekelahram.StartActivity;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Random;
 
 import androidx.annotation.RequiresApi;
@@ -39,11 +44,29 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String IMAGE_URL_EXTRA = "imageUrl";
     private static final String ADMIN_CHANNEL_ID ="admin_channel";
     private NotificationManager notificationManager;
-
+    private String title , content , date ;
+    private HashMap map ;
+    private DatabaseReference current_user_db ;
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
-        Intent notificationIntent = new Intent(this, StartActivity.class);
+        title = remoteMessage.getData().get("title") ;
+        content = remoteMessage.getData().get("message") ;
+        date = getdate() ;
+
+        FirebaseDatabase.getInstance().getReference().child("notifications").push() ;
+        String key = FirebaseDatabase.getInstance().getReference().child("notifications").push().getKey();
+        current_user_db = FirebaseDatabase.getInstance().getReference().child("notifications").child(key);
+
+        map = new HashMap();
+        map.put("title", title);
+        map.put("message", content);
+        map.put("date", date);
+
+
+        current_user_db.setValue(map);
+
+        Intent notificationIntent = new Intent(this, NewsActivity.class);
         if(StartActivity.isAppRunning){
             //Some action
         }else{
@@ -74,9 +97,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             setupChannels();
         }
+
+
+
 
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, ADMIN_CHANNEL_ID)
@@ -94,6 +120,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         .setContentIntent(pendingIntent);
 
         notificationManager.notify(notificationId, notificationBuilder.build());
+
+
+
 
     }
 
@@ -126,5 +155,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (notificationManager != null) {
             notificationManager.createNotificationChannel(adminChannel);
         }
+    }
+    private String getdate () {
+        String date = (DateFormat.format(" التاريخ "+" dd-MM-yyyy", new java.util.Date()).toString());
+        return date;
     }
 }

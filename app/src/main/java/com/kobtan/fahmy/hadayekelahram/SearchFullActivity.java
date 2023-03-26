@@ -161,6 +161,7 @@ public class SearchFullActivity extends AppCompatActivity {
 
                                             itemkey.add(childshot.getKey().toString());
 
+                                            //childshot.getRef().child("number").setValue("20");
 
                                             itemsubb.add(messageSnapshot.getKey().toString());
                                             itemsubb_subb.add("no") ;
@@ -190,6 +191,7 @@ public class SearchFullActivity extends AppCompatActivity {
                                                 map_ard.add(Double.valueOf(0));
                                             }
                                             itemkey.add(childshot.getKey().toString());
+                                            //childshot.getRef().child("number").setValue("20");
 
 
                                             itemsubb.add(messageSnapshot.getKey().toString());
@@ -220,6 +222,9 @@ public class SearchFullActivity extends AppCompatActivity {
                                                     itemrate.add(Float.valueOf(childshot_two.child("rating").getValue().toString()));
 
                                                     itemkey.add(childshot_two.getKey().toString()) ;
+
+                                                    //childshot_two.getRef().child("number").setValue("20");
+
                                                     itemsubb.add(messageSnapshot.getKey().toString());
                                                     itemsubb_subb.add(childshot.getKey().toString()) ;
 
@@ -251,6 +256,9 @@ public class SearchFullActivity extends AppCompatActivity {
                                                         map_ard.add(Double.valueOf(0));
                                                     }
                                                     itemkey.add(childshot_two.getKey().toString()) ;
+
+                                                    //childshot_two.getRef().child("number").setValue("20");
+
                                                     itemsubb.add(messageSnapshot.getKey().toString());
                                                     itemsubb_subb.add(childshot.getKey().toString()) ;
                                                 }

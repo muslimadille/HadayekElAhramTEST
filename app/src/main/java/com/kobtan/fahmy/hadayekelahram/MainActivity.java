@@ -10,6 +10,14 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import androidx.annotation.RequiresApi;
+
+
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.core.content.res.ResourcesCompat;
@@ -25,6 +33,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -39,8 +48,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.kobtan.fahmy.hadayekelahram.News.NewsActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
 import android.view.ViewGroup.LayoutParams;
@@ -53,11 +64,12 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> kind = new ArrayList<>() ;
     private ArrayList<String> osNameList = new ArrayList<>() ;
     private ArrayList<String> osNameList_eng = new ArrayList<>() ;
+    private ArrayList<String> images_ids = new ArrayList<>() ;
     private ArrayList<Integer> osImages = new ArrayList<>() ;
     private ArrayList<Integer> osColors = new ArrayList<>() ;
 
 
-
+    private DatabaseReference mDatabase ;
     private Toolbar toolbar ;
     private DrawerLayout drawerLayout;
     private TextView title  , titlee;
@@ -83,13 +95,64 @@ public class MainActivity extends AppCompatActivity {
     private String newString ;
     private StringLocal stringLocal ;
     private TextView fast_text ;
+    private  TextView text_e3ln ;
+    private LinearLayout lay_e3ln ;
 
     private String online = " ";
+    InterstitialAd mInterstitialAd ;
+    private int test_modules ;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("deviceid").build();
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {}
+        });
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3508304811182942/2735871601");
+        //mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                } else {
+                    Log.d("TAG", "The interstitial wasn't loaded yet.");
+                }
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                // Code to be executed when an ad request fails.
+            }
+
+            @Override
+            public void onAdOpened() {
+                // Code to be executed when the ad is displayed.
+            }
+
+            @Override
+            public void onAdClicked() {
+                // Code to be executed when the user clicks on an ad.
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                // Code to be executed when the user has left the app.
+            }
+
+            @Override
+            public void onAdClosed() {
+                // Code to be executed when the interstitial ad is closed.
+            }
+        });
+
         stringLocal = new StringLocal(MainActivity.this) ;
         setContentView(R.layout.activity_main);
         setContentView(R.layout.navigation_main);
@@ -133,8 +196,9 @@ public class MainActivity extends AppCompatActivity {
 
         typeface = Typeface.createFromAsset(getAssets() , "font.ttf");
 
-        title = (TextView) findViewById(R.id.title) ;
-        title.setTypeface(typeface);
+
+        //title = (TextView) findViewById(R.id.title) ;
+        //title.setTypeface(typeface);
 
         titlee = (TextView) findViewById(R.id.titlee) ;
         titlee.setTypeface(typeface);
@@ -143,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
         if (stringLocal.getUser() != null) {
             if (stringLocal.getUser().equals("en")) {
                 titlee.setText("All Services");
-                title.setText("Sell & Buy");
+                //title.setText("Sell & Buy");
             }
             else {}
         }
@@ -255,7 +319,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        buy.setOnClickListener(new View.OnClickListener() {
+       /* buy.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
@@ -294,6 +358,13 @@ public class MainActivity extends AppCompatActivity {
 
                 all.setEnabled(true);
             }
+        });*/
+        buy.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onClick(View view) {
+               startActivity(new Intent(getApplicationContext() , NewsActivity.class));
+            }
         });
 
         /*add.setOnClickListener(new View.OnClickListener() {
@@ -304,6 +375,10 @@ public class MainActivity extends AppCompatActivity {
         });*/
 
         //getData();
+
+        text_e3ln = findViewById(R.id.text_e3ln) ;
+        text_e3ln.setSelected(true);
+        //text_e3ln.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.move));
     }
 
     public void initNavigationDrawer() {
@@ -429,20 +504,20 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.closeDrawers();
             }
         });
-       addyy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext() , AddAdminActivity.class));
-                drawerLayout.closeDrawers();
-            }
-        });
-        buys.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext() , AdminBuysActivity.class));
-                drawerLayout.closeDrawers();
-            }
-        });
+//       addyy.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(getApplicationContext() , AddAdminActivity.class));
+//                drawerLayout.closeDrawers();
+//            }
+//        });
+//       buys.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(getApplicationContext() , AdminBuysActivity.class));
+//                drawerLayout.closeDrawers();
+//            }
+//        });
 
         update.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -532,6 +607,7 @@ public class MainActivity extends AppCompatActivity {
         osImages = new ArrayList<>() ;
 
         osNameList.add("مطاعم");
+       // osNameList.add("حملة سرطان الثدى");
         osNameList.add("تسوق");
         osNameList.add("موضة و ملابس");
         osNameList.add("مستشفيات");
@@ -539,6 +615,9 @@ public class MainActivity extends AppCompatActivity {
         osNameList.add("صيدليات");
         osNameList.add("معامل");
         osNameList.add("تعليمي");
+
+        osNameList.add("حفلات ومناسبات");   // new 1
+
         osNameList.add("جيم و رياضة");
         osNameList.add("اجهزة الكترونية") ;
         osNameList.add("عقارات");
@@ -560,6 +639,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         osColors.add(R.color.two);
+       // osColors.add(R.color.saratanColor);
         osColors.add(R.color.one);
         osColors.add(R.color.four);
         osColors.add(R.color.four);
@@ -567,6 +647,9 @@ public class MainActivity extends AppCompatActivity {
         osColors.add(R.color.six);
         osColors.add(R.color.seven) ;
         osColors.add(R.color.colorPrimary);
+
+        osColors.add(R.color.four);  // new 1
+
         osColors.add(R.color.black);
         osColors.add(R.color.eleven) ;
         osColors.add(R.color.fourten);
@@ -589,6 +672,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         osImages.add(R.drawable.restaurant);
+   //     osImages.add(R.drawable.saratan)  ;
         osImages.add(R.drawable.shopping);
         osImages.add(R.drawable.manwomen);
         osImages.add(R.drawable.hosbital_mn);
@@ -596,6 +680,9 @@ public class MainActivity extends AppCompatActivity {
         osImages.add(R.drawable.sydlyatt);
         osImages.add(R.drawable.maamel_mn) ;
         osImages.add(R.drawable.education_mn);
+
+        osImages.add(R.drawable.hflagded);   // new 1
+
         osImages.add(R.drawable.gym_mn);
         osImages.add(R.drawable.elec_mnn) ;
         osImages.add(R.drawable.akarat_mn);
@@ -727,9 +814,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
         mPager = (ViewPager) findViewById(R.id.pager);
 
 
@@ -765,6 +849,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
         // Pager listener over indicator
        /* indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -788,12 +873,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getData(String data_op) {
-
+        images_ids = new ArrayList<>() ;
         imagesView = new ArrayList<>() ;
         kind = new ArrayList<>() ;
 
-
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("sponser").child("القائمة الرئيسية")
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("sponser").child("القائمة الرئيسية")
                 .child("elements");
         mDatabase.addChildEventListener(new ChildEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -802,25 +886,44 @@ public class MainActivity extends AppCompatActivity {
                 for(DataSnapshot childSnapShot : dataSnapshot.getChildren()) {
 
                     if (childSnapShot.getKey().equals("name")) {
+                      //  Toast.makeText(MainActivity.this, "Yes", Toast.LENGTH_SHORT).show();
 
-                        imagesView.add("gif");
                         //imagesView.add("logo");
                         if (dataSnapshot.hasChild("profile_img")) {
                             imagesView.add(dataSnapshot.child("profile_img").getValue().toString()); //
-
+                            images_ids.add(dataSnapshot.getKey().toString());
+                            kind.add("pic");
+                            test_modules++;
                         }
                         else {
                             imagesView.add("waiting") ;
+                            images_ids.add("no");
+                            kind.add("pic");
+                            test_modules++;
                         }
 
+                       /* if (imagesView.size() >= 3 && imagesView.size() % 3 == 0 ) {
+                            imagesView.add("gif");
+                            images_ids.add("no");
+                            kind.add("gif");
+                        }*/
 
-                        kind.add("gif");
+                       // final new
+                        if (test_modules >= 3 && test_modules % 3 == 0 ) {
+                            imagesView.add("gif");
+                            images_ids.add("no");
+                            kind.add("gif");
+                        }
+
                         //kind.add("adv");
-                        kind.add("pic");
+
 
                     }
 
                 }
+                Collections.reverse(imagesView);
+                Collections.reverse(images_ids);
+                Collections.reverse(kind);
                 init(data_op);
             }
 
@@ -846,10 +949,31 @@ public class MainActivity extends AppCompatActivity {
         }) ;
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        swipeTimer = new Timer();
+    public void removeOpj (int s) {
+
+        final String[] list = new String[]{"مسح الاعلان", "الغاء"};
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle("Language")
+                .setItems(list, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(MainActivity.this, list[which], Toast.LENGTH_SHORT).show();
+                        if (list[which].equals("مسح الاعلان")) {
+                            mDatabase.child(images_ids.get(s)).setValue(null);
+
+                            Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(i);
+                            //Toast.makeText(MainActivity.this, images_ids.get(s), Toast.LENGTH_SHORT).show();
+                        }else if (list[which].equals("الغاء")) {
+
+                        }
+                        else {
+
+                        }
+                    }
+                })
+                .show();
+
     }
 
     public void setTimer(final ViewPager myPager, int time){
@@ -877,6 +1001,14 @@ public class MainActivity extends AppCompatActivity {
         }, 250, time*1000);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        swipeTimer = new Timer();
+    }
+
+
+
     public void stopTimer(){
         //handler.removeCallbacks(null);
         swipeTimer.cancel();
@@ -895,6 +1027,7 @@ public class MainActivity extends AppCompatActivity {
         StringLocal stringLocal = new StringLocal(MainActivity.this) ;
 
     }
+
 
 }
 

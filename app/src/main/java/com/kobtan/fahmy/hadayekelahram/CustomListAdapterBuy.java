@@ -141,7 +141,7 @@ public class CustomListAdapterBuy extends ArrayAdapter<String> {
 
 
 
-        img_fav.setOnClickListener(new View.OnClickListener() {
+       /* img_fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -192,7 +192,7 @@ public class CustomListAdapterBuy extends ArrayAdapter<String> {
                     Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
                 }
             }
-        });
+        });*/
 
         return rowView;
 

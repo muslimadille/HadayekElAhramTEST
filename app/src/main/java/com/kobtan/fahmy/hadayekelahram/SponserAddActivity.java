@@ -174,6 +174,7 @@ public class SponserAddActivity extends AppCompatActivity {
                 items.add("شركات الاتصالات") ;
                 items.add("موبيلات") ;
                 items.add("ترفيهي");
+                items.add("حفلات ومناسبات") ;
 
 
                 final String[] list = getStringArray(items);
@@ -398,7 +399,23 @@ public class SponserAddActivity extends AppCompatActivity {
                     osNameList = new ArrayList<>() ;
                     //
                     osNameList.add("شركات عقارية");
+                    osNameList.add("عقارات افراد");
                     osNameList.add("تشطيبات وديكور");
+                    osNameList.add("main");
+                    //
+
+                }
+                else if (newStringz.equals("حفلات ومناسبات")) {
+                    //
+                    osNameList = new ArrayList<>() ;
+                    //
+                    osNameList.add("بيوتي سنتر حريمي");
+                    osNameList.add("كوافير رجالي");
+                    osNameList.add("تصوير");
+                    osNameList.add("مساج وسبا");
+                    osNameList.add("زهور");
+                    osNameList.add("دعاية و اعلان");
+                    osNameList.add("تنظيم حفلات");
                     osNameList.add("main");
                     //
 
@@ -695,8 +712,16 @@ public class SponserAddActivity extends AppCompatActivity {
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
                             HashMap map_sp = new HashMap();
-                            map_sp.put("profile_img", taskSnapshot.getDownloadUrl().toString());
-                            current.updateChildren(map_sp) ;
+
+                            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Uri downloadUrl = uri;
+                                    map_sp.put("profile_img", downloadUrl.toString());
+                                    current.updateChildren(map_sp) ;
+                                }
+                            });
+
                             Toast.makeText(SponserAddActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
                         }
                     })

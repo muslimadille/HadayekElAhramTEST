@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -100,6 +101,20 @@ public class ViewPagerAbaterDownload extends PagerAdapter {
                         .placeholder(R.drawable.logo_custom)
                         //.apply(new RequestOptions().override(300, 250))
                         .into(imageView);
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (context instanceof MainActivity) {
+                           // ((MainActivity)context).removeOpj(position);
+                        }
+                        if (context instanceof MainSubActivity) {
+                           // ((MainSubActivity)context).removeOpj(position);
+                        }
+                        if (context instanceof MainChildActivity) {
+                           // ((MainChildActivity)context).removeOpj(position);
+                        }
+                    }
+                });
                 //imageView.setImageResource(IMAGES.get(position));
             }
             view.addView(imageLayout, 0);
