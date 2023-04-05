@@ -74,6 +74,7 @@ public class MainChildActivity extends AppCompatActivity {
     private EditText nameEditText ;
     private  ArrayList<Double> maplong = new ArrayList<>();
     private  ArrayList<Double> map_ard = new ArrayList<>();
+    private  ArrayList<String> map_link = new ArrayList<>();
 
     private ArrayList<String> imagedIds = new ArrayList<>();
     private DatabaseReference mDatabase ;
@@ -375,6 +376,10 @@ public class MainChildActivity extends AppCompatActivity {
                             itemaddress.add(dataSnapshot.child("address").getValue().toString() + " - " + gateey);
                             itemtel.add(dataSnapshot.child("telephone").getValue().toString());
                             itemkey.add(dataSnapshot.getKey().toString()) ;
+                            if(dataSnapshot.hasChild("map_link")){
+                                map_link.add(dataSnapshot.child("map_link").getValue().toString());
+                            }
+
                             if (dataSnapshot.hasChild("map_long") && dataSnapshot.hasChild("map_ard") ) {
                                 maplong.add(Double.valueOf(dataSnapshot.child("map_long").getValue().toString()));
                                 map_ard.add(Double.valueOf(dataSnapshot.child("map_ard").getValue().toString()));
@@ -400,7 +405,7 @@ public class MainChildActivity extends AppCompatActivity {
                // Collections.reverse(maplong);
                 //Collections.reverse(map_ard);
 
-                    adapter = new CustomListAdapterTwo(MainChildActivity.this, itemname , itemaddress, itemrate , itemimg , itemtel ,newStringThree , maplong , map_ard);
+                    adapter = new CustomListAdapterTwo(MainChildActivity.this, itemname , itemaddress, itemrate , itemimg , itemtel ,newStringThree , maplong , map_ard,map_link);
                     list.setAdapter(adapter);
 
             }
@@ -475,7 +480,7 @@ public class MainChildActivity extends AppCompatActivity {
                     //Log.i("Ameeer" , childSnapShot.toString() ) ;
 
                 }
-                adapter = new CustomListAdapterTwo(MainChildActivity.this, itemname , itemaddress, itemrate , itemimg , itemtel ,newStringThree , maplong , map_ard);
+                adapter = new CustomListAdapterTwo(MainChildActivity.this, itemname , itemaddress, itemrate , itemimg , itemtel ,newStringThree , maplong , map_ard,map_link);
                 list.setAdapter(adapter);
             }
 
@@ -559,7 +564,7 @@ public class MainChildActivity extends AppCompatActivity {
                     list.setAdapter(adapter_doc);
 
                 }else {
-                    adapter = new CustomListAdapterTwo(MainChildActivity.this, itemname , itemaddress, itemrate , itemimg , itemtel ,newStringThree , maplong ,map_ard);
+                    adapter = new CustomListAdapterTwo(MainChildActivity.this, itemname , itemaddress, itemrate , itemimg , itemtel ,newStringThree , maplong ,map_ard,map_link);
                     list.setAdapter(adapter);
                 }
             }

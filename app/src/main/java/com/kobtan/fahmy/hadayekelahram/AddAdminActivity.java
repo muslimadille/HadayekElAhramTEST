@@ -1,5 +1,6 @@
 package com.kobtan.fahmy.hadayekelahram;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -36,18 +37,23 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
+import android.widget.Toast;
+
 
 public class AddAdminActivity extends AppCompatActivity {
 
     private Button login ;
-    private EditText editText_name , editText_address , editText_tel , editText_gate , editText_tel_two ;
+    private EditText editText_name , editText_address , editText_tel , editText_gate , editText_tel_two,map_link ;
     private DatabaseReference current_user_db ;
     private String name , address , telephone , gate ;
-    private TextView kind_txt  , kind_txt_main ;
+    private TextView kind_txt  , kind_txt_main ,location_main;
     private String text_kind ;
     private String text_kind_main ;
     private String newStringz = " ";
     private ArrayList<String> items = new ArrayList<>();
+    private Double map_long=0.0;
+    private Double map_ard=0.0;
+
 
 
     // photo firebase
@@ -60,6 +66,8 @@ public class AddAdminActivity extends AppCompatActivity {
     private Uri filePath;
     private Image image ;
     private ArrayList<String> osNameList = new ArrayList<String>() ;
+    ///===========location=======================
+
 
 
     @Override
@@ -77,10 +85,19 @@ public class AddAdminActivity extends AppCompatActivity {
         editText_gate = (EditText) findViewById(R.id.input_bwaba) ;
         kind_txt = (TextView) findViewById(R.id.kind) ;
         kind_txt_main = (TextView) findViewById(R.id.kind_main) ;
+        location_main =(TextView) findViewById(R.id.location_main);
         img_one = (ImageView) findViewById(R.id.imgProfile1) ;
         editText_tel_two = (EditText) findViewById(R.id.input_telefone_two) ;
+        map_link=(EditText) findViewById(R.id.input_map_link);
 
 
+        location_main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddAdminActivity.this,EditLocationActivity.class);
+                startActivityForResult(intent, REQUEST_CODE);
+            }
+        });;
         img_one.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -505,6 +522,9 @@ public class AddAdminActivity extends AppCompatActivity {
         map.put("special", "no");
         map.put("website", "no");
         map.put("speciality", text_kind);
+        map.put("map_ard",map_ard);
+        map.put("map_long",map_long);
+        map.put("map_link",map_link.getText().toString());
 
 
 
@@ -551,6 +571,10 @@ public class AddAdminActivity extends AppCompatActivity {
         map.put("rating", "3");
         map.put("special", "no");
         map.put("website", "no");
+        map.put("map_ard",map_ard);
+        map.put("map_long",map_long);
+        map.put("map_link",map_link.getText().toString());
+
 
 
 
@@ -587,6 +611,7 @@ public class AddAdminActivity extends AppCompatActivity {
         return str;
     }
 
+    int REQUEST_CODE=56;
 
     @Override
     protected void onActivityResult(int requestCode, final int resultCode, Intent data) {
@@ -596,9 +621,16 @@ public class AddAdminActivity extends AppCompatActivity {
                 filePath = data.getData();
                 Bitmap myBitmap = BitmapFactory.decodeFile(image.getPath());
                 img_one.setImageBitmap(myBitmap);
+                ///
 
         }
         super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==REQUEST_CODE){
+             map_long=Double.valueOf(data.getStringExtra("LAT_LNG").split("#")[1]);
+            map_ard=Double.valueOf(data.getStringExtra("LAT_LNG").split("#")[0]);
+            Toast.makeText(AddAdminActivity.this, map_long.toString(), Toast.LENGTH_SHORT).show();
+
+        }
     }
 
     private void uploadImage(DatabaseReference current) {
@@ -656,5 +688,7 @@ public class AddAdminActivity extends AppCompatActivity {
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
         return Uri.parse(path);
     }
+    ///==============================================sdk 33 image picker=======================================
+
 
 }

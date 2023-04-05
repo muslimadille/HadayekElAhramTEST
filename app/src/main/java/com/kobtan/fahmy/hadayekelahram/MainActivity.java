@@ -504,20 +504,20 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.closeDrawers();
             }
         });
-//       addyy.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(getApplicationContext() , AddAdminActivity.class));
-//                drawerLayout.closeDrawers();
-//            }
-//        });
-//       buys.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(getApplicationContext() , AdminBuysActivity.class));
-//                drawerLayout.closeDrawers();
-//            }
-//        });
+       addyy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext() , AddAdminActivity.class));
+                drawerLayout.closeDrawers();
+            }
+        });
+       buys.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext() , AdminBuysActivity.class));
+                drawerLayout.closeDrawers();
+            }
+        });
 
         update.setOnClickListener(new View.OnClickListener() {
             @Override

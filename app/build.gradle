@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
     compileSdkVersion 33
@@ -7,8 +8,8 @@ android {
         applicationId "com.kobtan.fahmy.hadayekelahram"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode 36
-        versionName "1.369879563"
+        versionCode 34
+        versionName "1.33987934"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -50,6 +51,7 @@ dependencies {
 
     implementation 'com.victor:lib:1.0.4'
     implementation 'com.afollestad.material-dialogs:core:0.9.4.5'
+    implementation 'androidx.appcompat:appcompat:1.4.0'
 
 
     implementation 'me.relex:circleindicator:1.2.2@aar'
@@ -66,14 +68,18 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
-    implementation 'com.github.esafirm.android-image-picker:imagepicker:2.0.0'
     // for experimental rx picker
-    implementation 'com.github.esafirm.android-image-picker:rximagepicker:2.0.0'
     //noinspection GradleCompatible
     implementation 'com.android.support:recyclerview-v7:29.0.0'
 
     implementation 'org.jsoup:jsoup:1.8.3'
     implementation 'com.google.android.gms:play-services-ads:18.2.0'
     implementation 'com.hbb20:ccp:2.4.0'
+    implementation 'com.google.android.gms:play-services-maps:18.0.2'
+    implementation 'com.google.android.libraries.places:places:2.6.0'
+    implementation 'com.google.android.gms:play-services-location:20.0.0'
+    implementation 'com.karumi:dexter:6.2.2'
+    implementation 'com.github.esafirm:android-image-picker:2.4.5'
+
 
 }

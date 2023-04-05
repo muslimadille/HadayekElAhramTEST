@@ -33,9 +33,10 @@ public class CustomListAdapterTwo extends ArrayAdapter<String> {
     private int colorIdd ;
     private ArrayList<Double> long_map=  new ArrayList<>()  ;
     private ArrayList<Double> ard_map =  new ArrayList<>()  ;
+    private ArrayList<String> map_link =  new ArrayList<>();
 
 
-    public CustomListAdapterTwo(Activity context, ArrayList<String> itemname, ArrayList<String> itemprice , ArrayList<Float> itemrate ,ArrayList<String> itemimg , ArrayList<String> itemtel , int colorIdd  , ArrayList<Double>  long_map , ArrayList<Double>  ard_map) {
+    public CustomListAdapterTwo(Activity context, ArrayList<String> itemname, ArrayList<String> itemprice , ArrayList<Float> itemrate ,ArrayList<String> itemimg , ArrayList<String> itemtel , int colorIdd  , ArrayList<Double>  long_map , ArrayList<Double>  ard_map,ArrayList<String> map_link) {
         super(context, R.layout.itemlisttwo, itemname);
         // TODO Auto-generated constructor stub
 
@@ -47,6 +48,7 @@ public class CustomListAdapterTwo extends ArrayAdapter<String> {
         this.itemtel  = itemtel ;
         this.colorIdd  = colorIdd ;
         this.long_map = long_map ;
+        this.map_link=map_link;
         this.ard_map = ard_map ;
 
         typeface = Typeface.createFromAsset(this.context.getAssets() , "font.ttf");
@@ -105,10 +107,20 @@ public class CustomListAdapterTwo extends ArrayAdapter<String> {
         map_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i =  new Intent(context , MapsActivity.class) ;
-                i.putExtra("STRING_I_NEED" , long_map.get(position)) ;
-                i.putExtra("STRING_I_NEED2" , ard_map.get(position)) ;
-                context.startActivity(i);
+
+                if(long_map.get(position)>0.0&&ard_map.get(position)>0.0){
+                    Intent i =  new Intent(context , MapsActivity.class) ;
+                    i.putExtra("STRING_I_NEED" , long_map.get(position)) ;
+                    i.putExtra("STRING_I_NEED2" , ard_map.get(position)) ;
+                    context.startActivity(i);
+                }else{
+                    if(!map_link.isEmpty()){
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse(map_link.get(position)));
+                        context.startActivity(intent);
+                    }
+
+                }
             }
         });
 

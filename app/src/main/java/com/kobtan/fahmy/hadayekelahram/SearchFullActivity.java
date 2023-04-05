@@ -59,6 +59,8 @@ public class SearchFullActivity extends AppCompatActivity {
 
     private  ArrayList<Double> maplong = new ArrayList<>();
     private  ArrayList<Double> map_ard = new ArrayList<>();
+    private  ArrayList<String> map_link = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +136,7 @@ public class SearchFullActivity extends AppCompatActivity {
 
         maplong = new ArrayList<>();
         map_ard = new ArrayList<>();
+        map_link=new ArrayList<>();
 
         //Toast.makeText(this, s, Toast.LENGTH_LONG).show();
         mCustomerDatabase.orderByChild("name").startAt(s);
@@ -165,7 +168,9 @@ public class SearchFullActivity extends AppCompatActivity {
 
                                             itemsubb.add(messageSnapshot.getKey().toString());
                                             itemsubb_subb.add("no") ;
-
+                                            if(dataSnapshot.hasChild("map_link")){
+                                                map_link.add(dataSnapshot.child("map_link").getValue().toString());
+                                            }
                                             if (childshot.hasChild("map_long") && childshot.hasChild("map_ard")) {
                                                 maplong.add(Double.valueOf(childshot.child("map_long").getValue().toString()));
                                                 map_ard.add(Double.valueOf(childshot.child("map_ard").getValue().toString()));
@@ -182,6 +187,9 @@ public class SearchFullActivity extends AppCompatActivity {
                                             itemtel.add(childshot.child("telephone").getValue().toString());
                                             itemaddress.add(childshot.child("address").getValue().toString());
                                             itemrate.add(Float.valueOf(childshot.child("rating").getValue().toString()));
+                                            if(dataSnapshot.hasChild("map_link")){
+                                                map_link.add(dataSnapshot.child("map_link").getValue().toString());
+                                            }
                                             if (childshot.hasChild("map_long") && childshot.hasChild("map_ard")) {
                                                 maplong.add(Double.valueOf(childshot.child("map_long").getValue().toString()));
                                                 map_ard.add(Double.valueOf(childshot.child("map_ard").getValue().toString()));
@@ -227,7 +235,9 @@ public class SearchFullActivity extends AppCompatActivity {
 
                                                     itemsubb.add(messageSnapshot.getKey().toString());
                                                     itemsubb_subb.add(childshot.getKey().toString()) ;
-
+                                                    if(dataSnapshot.hasChild("map_link")){
+                                                        map_link.add(dataSnapshot.child("map_link").getValue().toString());
+                                                    }
                                                     if (childshot.hasChild("map_long") && childshot.hasChild("map_ard") ) {
                                                         maplong.add(Double.valueOf(childshot.child("map_long").getValue().toString()));
                                                         map_ard.add(Double.valueOf(childshot.child("map_ard").getValue().toString()));
@@ -246,6 +256,9 @@ public class SearchFullActivity extends AppCompatActivity {
                                                     itemtel.add(childshot_two.child("telephone").getValue().toString());
                                                     itemaddress.add(childshot_two.child("address").getValue().toString());
                                                     itemrate.add(Float.valueOf(childshot_two.child("rating").getValue().toString()));
+                                                    if(dataSnapshot.hasChild("map_link")){
+                                                        map_link.add(dataSnapshot.child("map_link").getValue().toString());
+                                                    }
                                                     if (childshot.hasChild("map_long") && childshot.hasChild("map_ard") ) {
                                                         maplong.add(Double.valueOf(childshot.child("map_long").getValue().toString()));
                                                         map_ard.add(Double.valueOf(childshot.child("map_ard").getValue().toString()));
@@ -271,7 +284,7 @@ public class SearchFullActivity extends AppCompatActivity {
                             }
                         }
 
-                        adapter = new CustomListAdapterTwo(SearchFullActivity.this, itemname , itemaddress, itemrate , itemimg , itemtel ,R.color.colorPrimary , maplong , map_ard);
+                        adapter = new CustomListAdapterTwo(SearchFullActivity.this, itemname , itemaddress, itemrate , itemimg , itemtel ,R.color.colorPrimary , maplong , map_ard,map_link);
                         list.setAdapter(adapter);
                         pd.cancel();
                     }

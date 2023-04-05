@@ -43,6 +43,8 @@ public class SearchActivity extends AppCompatActivity {
     private Integer numberGate ;
     private  ArrayList<Double> maplong = new ArrayList<>();
     private  ArrayList<Double> map_ard = new ArrayList<>();
+    private  ArrayList<String> map_link = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -493,6 +495,7 @@ public class SearchActivity extends AppCompatActivity {
 
         maplong = new ArrayList<>();
         map_ard = new ArrayList<>();
+        map_link=new ArrayList<>();
         mCustomerDatabase = FirebaseDatabase.getInstance().getReference().child("all").child(text_sub_er).child("elements").child(text_sub_sub_er);
 
         mCustomerDatabase.addChildEventListener(new ChildEventListener() {
@@ -511,6 +514,9 @@ public class SearchActivity extends AppCompatActivity {
 
 
 
+                            if(dataSnapshot.hasChild("map_link")){
+                                map_link.add(dataSnapshot.child("map_link").getValue().toString());
+                            }
                             if (dataSnapshot.hasChild("map_long") && dataSnapshot.hasChild("map_ard") ) {
                                 maplong.add(Double.valueOf(dataSnapshot.child("map_long").getValue().toString()));
                                 map_ard.add(Double.valueOf(dataSnapshot.child("map_ard").getValue().toString()));
@@ -527,6 +533,9 @@ public class SearchActivity extends AppCompatActivity {
                             itemaddress.add(dataSnapshot.child("address").getValue().toString());
                             itemtel.add(dataSnapshot.child("telephone").getValue().toString());
                             itemkey.add(dataSnapshot.getKey().toString());
+                            if(dataSnapshot.hasChild("map_link")){
+                                map_link.add(dataSnapshot.child("map_link").getValue().toString());
+                            }
                             if (dataSnapshot.hasChild("map_long") && dataSnapshot.hasChild("map_ard") ) {
                                 maplong.add(Double.valueOf(dataSnapshot.child("map_long").getValue().toString()));
                                 map_ard.add(Double.valueOf(dataSnapshot.child("map_ard").getValue().toString()));
@@ -541,7 +550,7 @@ public class SearchActivity extends AppCompatActivity {
                     //Log.i("Ameeer" , childSnapShot.toString() ) ;
 
                 }
-                adapter = new CustomListAdapterTwo(SearchActivity.this, itemname, itemaddress, itemrate , itemimg , itemtel , R.color.colorPrimary , maplong , map_ard);
+                adapter = new CustomListAdapterTwo(SearchActivity.this, itemname, itemaddress, itemrate , itemimg , itemtel , R.color.colorPrimary , maplong , map_ard,map_link);
                 list.setAdapter(adapter);
             }
 

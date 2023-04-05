@@ -79,6 +79,7 @@ public class ObjectPreviewActivity extends AppCompatActivity {
     private ArrayList<String> imagesView_new  = new ArrayList<>();
     final Handler handler_new = new Handler();
     public Timer swipeTimer_new ;
+    private String map_link="";
 
 
 
@@ -231,10 +232,17 @@ public class ObjectPreviewActivity extends AppCompatActivity {
         img_map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i =  new Intent(getApplicationContext() , MapsActivity.class) ;
-                i.putExtra("STRING_I_NEED" , maplong) ;
-                i.putExtra("STRING_I_NEED2" , map_ard) ;
-                startActivity(i);
+                if(maplong>0.0&&map_ard>0.0){
+                    Intent i =  new Intent(getApplicationContext() , MapsActivity.class) ;
+                    i.putExtra("STRING_I_NEED" , maplong) ;
+                    i.putExtra("STRING_I_NEED2" , map_ard) ;
+                    startActivity(i);
+                }else{
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(map_link));
+                    startActivity(intent);
+                }
+
             }
         });
 
@@ -520,6 +528,8 @@ public class ObjectPreviewActivity extends AppCompatActivity {
                     if (dataSnapshot.hasChild("map_long") && dataSnapshot.hasChild("map_ard") ) {
                         maplong = Double.valueOf(dataSnapshot.child("map_long").getValue().toString());
                         map_ard = Double.valueOf(dataSnapshot.child("map_ard").getValue().toString());
+                    }else if(dataSnapshot.hasChild("map_link")&&!(dataSnapshot.hasChild("map_long") && dataSnapshot.hasChild("map_ard") )){
+                       map_link= dataSnapshot.child("map_link").getValue().toString();
                     }
                     else {
                         maplong = Double.valueOf(0);
